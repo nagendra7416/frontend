@@ -1,38 +1,504 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+button
+{
+    cursor: pointer;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav 
+{
+    width: 100%;
+    height: 56px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 100000;
+}
+nav .inner 
+{
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+nav .inner .left 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .menu
+{
+    width: 40px;
+    height: 40px;
+}
+nav .inner .menu button
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+nav .inner .menu button svg 
+{
+    width: 24px;
+    height: 24px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+nav .inner .logo
+{
+    padding: 18px 14px 18px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .logo a
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .logo a svg 
+{
+    height: 20px;
+    width: 90px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+
+
+
+
+
+nav .inner .center 
+{
+    display: flex;
+    min-width: 0;
+    flex: 0 1 732px;
+    flex-direction: row;
+    align-items: center;
+}
+nav .inner .center .searchbox 
+{
+    margin: 0 0 0 40px;
+    padding: 0 4px;
+    flex: 1;
+    flex-basis: 1e-9px;
+    display: flex;
+}
+nav .inner .center .searchbox form 
+{
+    height: 40px;
+    position: relative;
+    flex: 1;
+    flex-basis: 1e-9px;
+    display: flex;
+    flex-direction: row;
+}
+nav .inner .center .searchbox form .container
+{
+    position: relative;
+    align-items: center;
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid #ccc;
+    border-right: none;
+    border-radius: 40px 0 0 40px;
+    box-shadow: inset 0 1px 2px #eee;
+    caret-color: #0f0f0f;
+    color: hsl(0, 0%, 6.7%);
+    padding: 0 4px 0 16px;
+    margin-left: 32px;
+    flex: 1;
+    flex-basis: 1e-9px;
+    display: flex;
+    flex-direction: row;
+}
+nav .inner .center .searchbox form .container input
+{
+    outline: none;
+    color: hsl(0, 0%, 6.7%);
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    max-width: 100%;
+    width: 100%;
+    text-align: inherit;
+}
+nav .inner .center .searchbox button
+{
+    border: 1px solid #d3d3d3;
+    background-color: #f8f8f8;
+    border-radius: 0 40px 40px 0;
+    cursor: pointer;
+    height: 40px;
+    width: 64px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.App-link {
-  color: #61dafb;
+nav .inner .center .micbox 
+{
+    border-radius: 100px;
+    margin-left: 12px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+nav .inner .center .micbox button
+{
+    min-width: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .center .micbox button svg
+{
+    width: 24px;
+    height: 24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nav .inner .right 
+{
+    min-width: 225px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+nav .inner .right .buttons 
+{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .right .buttons button
+{
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .right .buttons .profile
+{
+    padding: 1px 0;
+    width: 60px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .right .buttons .notification
+{
+    position: relative;
+}
+nav .inner .right .buttons .notification label
+{
+    position: absolute;
+    top: 3px;
+    left: 20px;
+    display: inline-block;
+    padding: 0 4px;
+    min-width: 8px;
+    max-width: 18px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-radius: 22px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    background: #c00;
+    color: white;
+}
+nav .inner .right .buttons .upload, .notification
+{
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .right .buttons .upload, .notification, .profile
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+nav .inner .right .buttons .profile img 
+{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+.main .side 
+{
+    height: calc(100vh - 56px);
+    width: 72px;
+    box-sizing: border-box;
+    display: inline-block;
+    background-color: #fff;
+    z-index: 2028;
+    padding: 0 4px;
+}
+.main .side .items
+{
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.main .side .items .box 
+{
+    height: 74px;
+    width: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main .side .items .box a 
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.main .side .items .box a .link
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.main .side .items .box a .link svg 
+{
+    width: 24px;
+    height: 24px;
+    margin-bottom: 6px;
+}
+.main .side .items .box a .link label 
+{
+    white-space: nowrap;
+    font-size: 10px;
+    font-weight: 400;
+    color: #0f0f0f;
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+.main 
+{
+    position: fixed;
+    padding-top: 56px;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: calc(100vh - 56px);
+}
+.main::-webkit-scrollbar
+{
+    width: 0;
+}
+.main .main-scroll 
+{
+    width: calc(100vw - 72px);
+    height: 100%;
+    overflow-y: scroll;
+}
+.main .main-scroll::-webkit-scrollbar
+{
+    width: 0;
+}
+.main .main-scroll .inner 
+{
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-rows: auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 30px;
+}
+.main .main-scroll .inner .video 
+{
+    width: 100%;
+}
+.main .main-scroll .inner .video img 
+{
+    width: 100%;
+}
+.main .main-scroll .inner .video .video-img 
+{
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.main .main-scroll .inner .video .video-detail
+{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.main .main-scroll .inner .video .video-detail .video-left
+{
+    margin-top: 12px;
+    margin-right: 12px;
+}
+
+.main .main-scroll .inner .video .video-detail .video-left .video-author-img 
+{
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.main .main-scroll .inner .video .video-detail .video-left .video-author-img img 
+{
+    width: 100%;
+    height: 100%;
+}
+.main .main-scroll .inner .video .video-detail .video-right
+{
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+a
+{
+    text-decoration: none;
+    color: none;
+    color: #0f0f0f;
+}
+.main .main-scroll .inner .video .video-detail .video-right h4 
+{
+    color: #0f0f0f;
+    font-size: 15px;
+    font-weight: 500;
+    overflow: hidden;
+    max-height: 36px;
+    white-space: normal;
+    line-height: 19px;
+}
+.main .main-scroll .inner .video .video-detail .video-right label 
+{
+    font-size: 13px;
+    margin-top: 8px;
+    font-weight: 400;
+    
+}
+.main .main-scroll .inner .video .video-detail .video-right label a 
+{
+    color: #606060;
+}
+.main .main-scroll .inner .video .video-detail .video-right label a:hover 
+{
+    color: #000;
+}
+.main .main-scroll .inner .video .video-detail .video-right div span
+{
+    color: #606060;
+    font-size: 13px;
+}
+
+
+body::-webkit-scrollbar
+{
+    width: 0;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 656px){
+    .main .side
+    {
+        display: none;
+    }
+    .main .main-scroll
+    {
+        width: 100%;
+    }
+}
+@media (min-width: 1386px){
+    .main .side
+    {
+        display: none;
+    }
+    .main .main-scroll
+    {
+        width: 100%;
+    }
 }
