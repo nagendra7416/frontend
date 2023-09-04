@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import Navbar from "../components/Navbar";
 import Side from "../components/Side";
+import Sidebar from "../components/Sidebar";
 
 
 function Library(){
@@ -12,6 +13,7 @@ function Library(){
             <Navbar />
             <div className="main">
                 <Side />
+                <Sidebar />
                 <div className="main-scroll">
                     <div className="inner">
                         <h1>Library</h1>

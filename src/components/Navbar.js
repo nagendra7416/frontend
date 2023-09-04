@@ -1,16 +1,64 @@
 import { NavLink } from "react-router-dom";
 import logo from '../assets/logo.jpg';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 function Navbar(){
+    const [userInfo, setUserInfo] = useState([]);
+
+    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'; // Replace with your CSRF token header name
+    axios.defaults.xsrfCookieName = 'csrftoken'; 
+
+    useEffect(() => {
+        const apiurl = 'http://localhost:8000/api/get_user_data';
+
+        fetch(apiurl, {
+            method: 'GET',
+            credentials: 'include',
+        })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Failed to fetch user info');
+            }
+        })
+        .then(data => {
+            setUserInfo(data);
+        })
+        .catch(error => {
+            console.error('Error fetching user info:', error);
+        });
+
+
+    }, []);
+
+    function handleMenu(){
+        const menbtn = document.querySelector('.menu button');
+        const overlay = document.querySelector('.hiddensidebar');
+        const hiddenclose = document.getElementById('hiddensidebarclose');
+        const overlayclose = document.getElementById('closebtn');
+
+        if(menbtn){
+                overlay.classList.toggle('active');
+                hiddenclose.classList.toggle('active');
+                overlayclose.classList.toggle('active');
+        }
+    }
     return(
         <>
             <nav className="nav">
                 <div className="inner">
                     <div className="left">
-                        <div className="menu">
+                        <div className="menu" onClick={handleMenu}>
                             <button type="button">
                                 <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg>
+                            </button>
+                        </div>
+                        <div className="men">
+                            <button>
+                                <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" className="style-scope yt-icon" style={{pointerEvents: 'none'}}><g className="style-scope yt-icon"><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z" className="style-scope yt-icon"></path></g></svg>
                             </button>
                         </div>
                         <div className="logo">
@@ -51,9 +99,25 @@ function Navbar(){
                                 <label>1</label>
                             </div>
                             <div className="profile">
-                                <button type="button">
-                                    <img alt="s" src={logo} />
-                                </button>
+                                {userInfo ? (
+                                    <>
+                                        {userInfo.channelimage ? (
+                                            <button type="button">
+                                                <img alt="s" src={userInfo.channelimage} />
+                                            </button>
+                                        ):(
+                                            <button type="button">
+                                            <img alt="s" src={logo} />
+                                        </button>
+                                        )}
+                                    </>
+                                    
+                                ):(
+                                    <button type="button">
+                                        <img alt="s" src={logo} />
+                                    </button>
+                                )}
+                                
                             </div>
                         </div>
                     </div>

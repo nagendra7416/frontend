@@ -1,15 +1,13 @@
 import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Side from "../components/Side";
-import thumbnail from '../assets/thumbnail.webp';
-import logo from '../assets/logo.jpg';
 import {Helmet} from "react-helmet";
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Sidebar from "../components/Sidebar";
 
 
 function Explore(){
-
 
     const [videos, setVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -37,8 +35,9 @@ function Explore(){
             <Navbar />
             <div className="main">
                 <Side />
+                <Sidebar />
                 <div className="main-scroll">
-                    <div className="inner">
+                    {/* <div className="inner">
                         {isLoading ? (
                             <label>Loading...</label>
                         ):(
@@ -78,7 +77,44 @@ function Explore(){
                             </>
                         )}
                         
+                    </div> */}
+
+                    <div className="inners" style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <h2 style={{padding: '20px', maxWidth: '1284px', width: '95%'}}>Trending</h2>
+
+                        <div className="explorecon">
+                            {isLoading ? (
+                                <label>Loading...</label>
+                            ):(
+                                <>
+                                    {videos.map(video => (
+                                        <div className="explores" key={video.id}>
+                                            <NavLink to='/'>
+                                                <div className="explore">
+                                                    <div className="leftimg">
+                                                        <img alt="s" src={video.image} data-real-src="{{video.image.url}}" />
+                                                        <span>
+                                                            <p>{video.duration}</p>
+                                                        </span>
+                                                    </div>
+                                                    <div className="rightdetail">
+                                                        <h3>{video.title}</h3>
+                                                        <div className="author">                                    
+                                                            <NavLink to='/'>{video.author}</NavLink>                                    
+                                                            <span> &bull; <label style={{margin: '0 5px'}}>{video.views} views</label> &bull; <label style={{margin: '0 5px'}}>{video.published}</label></span>
+                                                        </div>
+                                                        <p>{video.description}</p>                
+                                                    </div>
+                                                </div>
+                                            </NavLink>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                        </div>
                     </div>
+
+                    
                 </div>
             </div>
         </>

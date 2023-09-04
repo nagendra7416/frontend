@@ -19,7 +19,7 @@ nav
     top: 0;
     left: 0;
     background: white;
-    z-index: 100000;
+    z-index: 100;
 }
 nav .inner 
 {
@@ -350,6 +350,342 @@ nav .inner .right .buttons .profile img
 
 
 
+
+.main .sidebar 
+{
+    width: 240px;
+    min-width: 240px;
+    min-height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: white;
+    overflow-y: scroll;
+
+    display: none;
+}
+.main .sidebar::-webkit-scrollbar
+{
+    width: 0px;
+}
+.main .sidebar::-webkit-scrollbar-thumb
+{
+    background: lightgray;
+}
+.main .sidebar::-webkit-scrollbar-track
+{
+    width: 10px;
+}
+.main .sidebar .linkscon 
+{
+    width: 100%;
+}
+.main .sidebar .linkscon .links
+{
+    width: 100%;
+    border-bottom: .5px solid lightgray;
+    padding: 10px 0;
+}
+.main .sidebar .linkscon .links p 
+{
+    padding: 0 24px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #212121;
+}
+.main .sidebar .linkscon .links ul 
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.main .sidebar .linkscon .links ul li 
+{
+    width: 100%;
+}
+.main .sidebar .linkscon .links ul li .link 
+{
+    height: 40px;
+    width: 100%;
+}
+.main .sidebar .linkscon .links ul li .link button
+{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: none;
+}
+.main .sidebar .linkscon .links ul li .link button:hover 
+{
+    background: whitesmoke;
+}
+.main .sidebar .linkscon .links ul li .link button a 
+{
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    text-decoration: none;
+}
+.main .sidebar .linkscon .links ul li .link button a svg 
+{
+    width: 24px;
+    height: 24px;
+    margin-right: 24px;
+}
+.main .sidebar .linkscon .links ul li .link button a span 
+{
+    color: black;
+    font-weight: 400;
+}
+.main .sidebar .linkscon .links ul li.active .link button a span 
+{
+    font-weight: 500;
+}
+.main .sidebar .linkscon .links ul li.active .link button
+{
+    background: rgb(224, 223, 223);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nav .inner .left .men
+{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    display: none;
+}
+nav .inner .left .men button
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+}
+nav .inner .left .men svg 
+{
+    width: 24px;
+    height: 24px;
+}
+#closebtn {
+    z-index: 1000000000;
+}
+#hiddensidebarclose
+{
+    margin-left: 16px;
+    z-index: 100000000;
+}
+.hiddensidebar
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    background: white;
+    z-index: 1000000;
+    transform: translateX(-250px);
+    transition: .3s;
+    z-index: 1000000000;
+
+
+}
+.hiddensidebar.active
+{
+    transform: translateX(0px);
+    transition: .3s;
+}
+#closebtn
+{
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 0;
+    border: none;
+    outline: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000000; 
+    cursor: pointer;
+    display: none;
+}
+#closebtn.active 
+{
+    display: block;
+}
+
+
+
+
+.hiddensidebar .header 
+{
+    width: 100%;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    background: white;
+}
+.hiddensidebar .header .menu
+{
+    width: 40px;
+    height: 40px;
+}
+.hiddensidebar .header .menu button
+{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.hiddensidebar .header .menu button svg 
+{
+    width: 24px;
+    height: 24px;
+}
+.hiddensidebar #logo
+{
+    height: 100%;
+    border: none;
+    background: none;
+    padding: 18px 14px 18px 16px;
+    margin-left: 16px;
+}
+.hiddensidebar #logo svg 
+{
+    width: 90px;
+    height: 20px;
+}
+
+
+.hiddensidebar .linkscon 
+{
+    width: 100%;
+    height: 100vh;
+    background: white;
+    overflow-y: scroll;
+}
+.hiddensidebar .linkscon::-webkit-scrollbar
+{
+    width: 0;
+}
+.hiddensidebar .linkscon .links
+{
+    width: 100%;
+    border-bottom: .5px solid lightgray;
+    padding: 10px 0;
+}
+.hiddensidebar .linkscon .links p 
+{
+    padding: 0 24px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #212121;
+}
+.hiddensidebar .linkscon .links ul 
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.hiddensidebar .linkscon .links ul li 
+{
+    width: 100%;
+}
+.hiddensidebar .linkscon .links ul li .link 
+{
+    height: 40px;
+    width: 100%;
+}
+.hiddensidebar .linkscon .links ul li .link button
+{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: none;
+}
+.hiddensidebar .linkscon .links ul li .link button:hover 
+{
+    background: whitesmoke;
+}
+.hiddensidebar .linkscon .links ul li .link button a 
+{
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    text-decoration: none;
+}
+.hiddensidebar .linkscon .links ul li .link button a svg 
+{
+    width: 24px;
+    height: 24px;
+    margin-right: 24px;
+}
+.hiddensidebar .linkscon .links ul li .link button a span 
+{
+    color: black;
+    font-weight: 400;
+}
+.hiddensidebar .linkscon .links ul li.active .link button a span 
+{
+    font-weight: 500;
+}
+.hiddensidebar .linkscon .links ul li.active .link button
+{
+    background: rgb(224, 223, 223);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .main 
 {
     position: fixed;
@@ -397,6 +733,16 @@ nav .inner .right .buttons .profile img
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+.main .main-scroll .inner .video .video-img label 
+{
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 2px 4px;
 }
 
 
@@ -480,6 +826,144 @@ body::-webkit-scrollbar
 
 
 
+/* Explore container */
+
+.explores .explore .leftimg
+    {
+        position: relative;
+    }
+    .explores .explore .leftimg span
+    {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        z-index: 0;
+        background: rgba(0,0,0,0.9);
+        color: white;
+        padding: 2px 3px;
+        border-radius: 2px;
+    }
+    .explorecon 
+    {
+        width: 95%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 0px 20px 20px 20px;
+        max-width: 1284px;
+    }
+    .explorecon .explore 
+    {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .explorecon .explores 
+    {
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 10px;
+    }
+    .explorecon form button
+    {
+        text-align: left;
+    }
+    .explorecon .explore .leftimg 
+    {
+        width: 250px;
+        min-width: 250px;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .explorecon .explore .leftimg img 
+    {
+        width: 100%;
+    }
+    
+    .explorecon .explore .rightdetail 
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding-left: 16px;
+    }
+    .explorecon .explore .rightdetail h3 
+    {
+        color: #030303;
+        font-size: 19px;
+        line-height: 26px;
+        font-weight: 400;
+        max-height: 3em;
+        overflow: hidden;
+    }
+    .explorecon .explore .rightdetail .author
+    {
+        display: flex;
+        align-items: center;
+        margin: 3px 0;
+    }
+    
+    .explorecon .explore .rightdetail .author a
+    {
+        font-size: 12px;
+        line-height: 18px;
+        font-weight: 400;
+        max-height: 18px;
+        overflow: hidden;
+        display: flex;
+        color: #606060;
+        text-decoration: none;
+    }
+    
+    .explorecon .explore .rightdetail .author span
+    {
+        font-size: 12px;
+        line-height: 18px;
+        font-weight: 400;
+        max-height: 18px;
+        overflow: hidden;
+        display: flex;
+        color: #606060;
+        text-decoration: none;
+        margin-left: 5px;
+    }
+    .explorecon .explore .rightdetail p 
+    {
+        color: #606060;
+        padding-top: 5px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        line-height: 18px;
+        font-weight: 400;
+        max-height: 3.3em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @media (max-width: 656px){
@@ -491,8 +975,13 @@ body::-webkit-scrollbar
     {
         width: 100%;
     }
+    .main .sidebar
+    {
+        display: none;
+    }
+    
 }
-@media (min-width: 1386px){
+@media (min-width: 1300px){
     .main .side
     {
         display: none;
@@ -500,5 +989,17 @@ body::-webkit-scrollbar
     .main .main-scroll
     {
         width: 100%;
+    }
+    .main .sidebar
+    {
+        display: flex;
+    }
+    nav .inner .left .men
+    {
+        display: flex;
+    }
+    nav .inner .left .menu 
+    {
+        display: none;
     }
 }
