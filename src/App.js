@@ -7,6 +7,7 @@ import Subscriptions from './pages/Subscriptions';
 import Library from './pages/Library';
 import VideoDetail from './pages/VideoDetail';
 import HiddenSideBar from './components/HiddenSideBar';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path='/feed/explore' element={<Explore />}></Route>
         <Route exact path='/feed/subscriptions' element={<Subscriptions />}></Route>
         <Route exact path='/feed/library' element={<Library />}></Route>
+        <Route exact path='/search' element={<Search />}></Route>
       </Routes>
     </>
   );

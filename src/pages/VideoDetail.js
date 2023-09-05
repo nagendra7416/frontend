@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 import Navbar from '../components/Navbar';
 import { useParams } from 'react-router-dom';
 
-
 const VideoDetail = () => {
     const [video, setVideo] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -16,9 +15,9 @@ const VideoDetail = () => {
 
         axios.get(apiurl)
         .then(response => {
-            setInterval(() => {
-                setIsLoading(false);
-            }, 1000);
+            console.log(response.data);
+            document.title = `${response.data.title} - YouTube`;
+            setIsLoading(false);
             setVideo(response.data);
              // Set loading to false when data is received
         })
@@ -36,12 +35,14 @@ const VideoDetail = () => {
             </Helmet>
             <Navbar />
             <div className="main">
-                <div className="main-scroll">
-                    <div className="inner">
+                <div className="main-scroll" style={{padding: '20px'}}>
+                    <div className='inner'>
                         {isLoading ? (
                             <h1>Loading...</h1>
                         ):(
-                            <h1>{video.id}: {video.title}</h1>
+                            <>
+                                {video.id}
+                            </>
                         )}
                     </div>
                 </div>

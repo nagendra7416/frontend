@@ -4,7 +4,7 @@ import Side from "../components/Side";
 import Sidebar from "../components/Sidebar";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
+import LoadingBar from 'react-top-loading-bar';
 
 function Subscriptions(){
     const [subVideos, setSubVideos] = useState([]);
@@ -27,7 +27,7 @@ function Subscriptions(){
         })
         .then(data => {
             setIsLoading(false);
-            document.title = `(${data.length}) Explore - YouTube`;
+            document.title = `(${data.length}) Subscriptions - YouTube`;
             setSubVideos(data);
         })
         .catch(error => {
@@ -46,6 +46,11 @@ function Subscriptions(){
             <Helmet>
                 <title>Subscriptions - YouTube</title>
             </Helmet>
+            <LoadingBar
+                    color="#ff0000" // Customize the color (e.g., red)
+                    height={2}       // Customize the height (4 pixels)
+                    progress={isLoading ? 30 : 100} // Set progress based on loading state
+                />
             <Navbar />
             <div className="main">
                 <Side />
@@ -91,8 +96,6 @@ function Subscriptions(){
                                                     </div>
                                                 </div>
                                             ))}
-                                            <div className="video"></div>
-                                            <div className="video"></div>
                                             <div className="video"></div>
                                             <div className="video"></div>
                                             <div className="video"></div>
@@ -146,38 +149,84 @@ function Subscriptions(){
                                                 </>
                                             ):(
                                                 <>
-                                                    {subVideos.map(video => (
-                                                        <div className="video" key={video.id}>
-                                                            <div className="video-img">
-                                                                <img alt="s" src={video.image} />
-                                                            </div>
-                                                            <div className="video-detail">
-                                                                <div className="video-left">
-                                                                    <div className="video-author-img">
-                                                                        <NavLink to='/'>
-                                                                            <img alt="s" src={video.authorimg} />
-                                                                        </NavLink>
+                                                    {subVideos.length === 3 ? (
+                                                        <>
+                                                            {subVideos.map(video => (
+                                                                <div className="video" key={video.id}>
+                                                                    <div className="video-img">
+                                                                        <img alt="s" src={video.image} />
+                                                                    </div>
+                                                                    <div className="video-detail">
+                                                                        <div className="video-left">
+                                                                            <div className="video-author-img">
+                                                                                <NavLink to='/'>
+                                                                                    <img alt="s" src={video.authorimg} />
+                                                                                </NavLink>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="video-right">
+                                                                            <h4>
+                                                                                <NavLink to='/'>
+                                                                                    {video.title}
+                                                                                </NavLink>
+                                                                            </h4>
+                                                                            <label>
+                                                                                <NavLink to='/'>
+                                                                                    {video.author}
+                                                                                </NavLink>
+                                                                            </label>
+                                                                            <div>
+                                                                                <span>{video.views} views </span>
+                                                                                <span>&bull; {video.published}</span>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="video-right">
-                                                                    <h4>
-                                                                        <NavLink to='/'>
-                                                                            {video.title}
-                                                                        </NavLink>
-                                                                    </h4>
-                                                                    <label>
-                                                                        <NavLink to='/'>
-                                                                            {video.author}
-                                                                        </NavLink>
-                                                                    </label>
-                                                                    <div>
-                                                                        <span>{video.views} views </span>
-                                                                        <span>&bull; {video.published}</span>
+                                                            ))}
+                                                            <div className="video"></div>
+                                                            <div className="video"></div>
+                                                            <div className="video"></div>
+                                                            <div className="video"></div>
+                                                            <div className="video"></div>
+                                                            <div className="video"></div>
+                                                        </>
+                                                    ):(
+                                                        <>
+                                                            {subVideos.map(video => (
+                                                                <div className="video" key={video.id}>
+                                                                    <div className="video-img">
+                                                                        <img alt="s" src={video.image} />
+                                                                    </div>
+                                                                    <div className="video-detail">
+                                                                        <div className="video-left">
+                                                                            <div className="video-author-img">
+                                                                                <NavLink to='/'>
+                                                                                    <img alt="s" src={video.authorimg} />
+                                                                                </NavLink>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="video-right">
+                                                                            <h4>
+                                                                                <NavLink to='/'>
+                                                                                    {video.title}
+                                                                                </NavLink>
+                                                                            </h4>
+                                                                            <label>
+                                                                                <NavLink to='/'>
+                                                                                    {video.author}
+                                                                                </NavLink>
+                                                                            </label>
+                                                                            <div>
+                                                                                <span>{video.views} views </span>
+                                                                                <span>&bull; {video.published}</span>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
+                                                            ))}
+                                                        </>
+                                                    )}
+                                                    
                                                 </>
                                             )}
                                         </>

@@ -5,7 +5,7 @@ import {Helmet} from "react-helmet";
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
-
+import LoadingBar from 'react-top-loading-bar';
 
 function Explore(){
 
@@ -17,7 +17,6 @@ function Explore(){
 
         axios.get(apiurl)
         .then(response => {
-            document.title = `(${response.data.length}) Explore - YouTube`
             setIsLoading(false);
             setVideos(response.data);
         })
@@ -29,9 +28,15 @@ function Explore(){
 
     return (
         <>
+            
             <Helmet>
                 <title>Explore - YouTube</title>
             </Helmet>
+            <LoadingBar
+                    color="#ff0000" // Customize the color (e.g., red)
+                    height={2}       // Customize the height (4 pixels)
+                    progress={isLoading ? 30 : 100} // Set progress based on loading state
+                />
             <Navbar />
             <div className="main">
                 <Side />

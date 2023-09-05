@@ -59,3 +59,22 @@ var allImages = document.querySelectorAll('img');
 allImages.forEach(function(img) {
     observer.observe(img);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

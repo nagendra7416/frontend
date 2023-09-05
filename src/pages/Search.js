@@ -3,24 +3,25 @@ import Navbar from "../components/Navbar";
 import Side from "../components/Side";
 import Sidebar from "../components/Sidebar";
 
-function Library(){
+
+function Search(){
     return (
         <>
-            <Helmet>
-                <title>Library - YouTube</title>
-            </Helmet>
-
+        <Helmet>
+            <title>Search - YouTube</title>
+        </Helmet>
             <Navbar />
             <div className="main">
                 <Side />
                 <Sidebar />
                 <div className="main-scroll">
                     <div className="inner">
-                        <h2>Library</h2>
+                        <h2>Search: </h2>
                     </div>
                 </div>
             </div>
         </>
     )
 }
-export default Library;
+
+export default Search;
