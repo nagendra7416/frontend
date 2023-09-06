@@ -355,7 +355,7 @@ nav .inner .right .buttons .profile img
 {
     width: 240px;
     min-width: 240px;
-    min-height: calc(100vh - 56px);
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -439,6 +439,10 @@ nav .inner .right .buttons .profile img
 {
     color: black;
     font-weight: 400;
+}
+.main .sidebar .linkscon .links ul li .link button a label
+{
+    pointer-events: none;
 }
 .main .sidebar .linkscon .links ul li.active .link button a span 
 {
@@ -702,7 +706,7 @@ nav .inner .left .men svg
 .main .main-scroll 
 {
     width: calc(100vw - 72px);
-    height: 100%;
+    height: calc(100vh - 56px);
     overflow-y: scroll;
 }
 .main .main-scroll::-webkit-scrollbar
@@ -1012,26 +1016,262 @@ body::-webkit-scrollbar
 
 
 
-/* video detail */
+/* channel */
+.channelcon {
+    width: 100%;
+    height: calc(100% - 0px);
+    overflow-x: hidden;
+}
+.channelcon .banner {
+    height: calc(16.1290322581vw - 1px);
+    width: 100%;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+.channelcon .channel-outer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 20px;
+}
+.channelcon .channel-outer .channel-layer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+}
+.channel-layer .channel-header {
+    width: 100%;
+    max-width: 1150px;
+    height: 148px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 0 20px; */
+}
+.channel-header .left {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+.channel-header .left .channel-img {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.channel-header .left .channel-img img {
+    width: 100%;
+    height: 100%;
+}
+.channel-header .left .channel-name h4 {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 30px;
+    word-break: break-word;
+    max-height: 32px;
+    overflow: hidden;
+}
+.channel-header .left .channel-name h6 {
+    color: gray;
+    margin-bottom: 8px;
+    font-weight: 400;
+    font-size: 13px;
+}
+.channel-header .left .channel-name label
+{
+    width: 90%;
+    height: 40px;
+    overflow: hidden;
+    font-size: 15px;
+}
+
+.channel-header .right {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+.channel-header .right #manage button {
+    background: dodgerblue;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 2px;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: row;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
 
 
+.channel-outer .buttons {
+    width: 100%;
+    max-width: 1150px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    overflow-x: scroll;
+    background: white;
+    padding: 0 20px;
+}
+.channel-outer .buttons button {
+    height: 100%;
+    border: none;
+    background: none;
+    border-bottom: 2px solid white;
+    display: flex;
+    align-items: flex-start;
+}
+.channel-outer .buttons button.active {
+    border-bottom: 2px solid gray;
+    background: whitesmoke;
+}
+.channel-outer .buttons button a {
+    padding: 0px 32px;
+    text-transform: uppercase;
+    color: #606060;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: .5px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
 
+.channel-inner
+{
+    width: calc(100% - 40px);
+}
+.channel-inner .featured {
+    width: 100%;
+    margin-top: 20px;
+}
+.channel-inner .featured .f-inner {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    align-items: flex-start;
+}
+.featured .f-inner .feature-img {
+    width: 300px;
+    min-width: 300px;
+    height: auto;
+    overflow: hidden;
+    margin-right: 10px;
+}
+.featured .f-inner .feature-img video {
+    width: 100%;
+}
+.featured .f-inner .feature-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 5px;
+}
 
+.featured .f-inner .feature-detail a {
+    font-size: 13px;
+    color: gray;
+    line-height: 22px;
+    text-decoration: none;
+}
+.featured .f-inner .feature-detail h4 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    max-height: 46px;
+    overflow: hidden;
+    color: black;
+}
+.featured .f-inner .feature-detail span {
+    font-size: 12px;
+    color: gray;
+}
 
+.channel-inner .posts {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+}
+.posts p {
+    margin: 20px 0;
+    color: #030303;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 500;
+    max-height: 22px;
+    overflow: hidden;
+}
+.channel-inner .posts .post-inner {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-rows: auto;
+    grid-column-gap: 5px;
+    grid-row-gap: 15px;
+    
+}
+.channel-inner .posts .post-inner .post {
+    width: 100%;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+.channel-inner .posts .post-inner .post .post-img {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.post-inner .post img {
+    width: 100%;
+}
+.channel-inner .posts .post-inner .post .post-img label {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 11px;
+    padding: 3px 5px;
+}
+.post-inner .post .post-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.post-inner .post .post-detail a {
+    color: #606060;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    text-decoration: none;
+    max-height: 20px;
+    margin-top: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.post-inner .post .post-detail span {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #606060;
+}
 
 
 

@@ -7,34 +7,57 @@ import axios from "axios";
 
 function Navbar(){
     const [userInfo, setUserInfo] = useState([]);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
     let navigate = useNavigate();
 
     function navigateToSearch(){
         navigate('/search');
     }
+    function navigateToChannel(){
+        navigate(`/channel/${userInfo.channelid}`);
+    }
     axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'; // Replace with your CSRF token header name
     axios.defaults.xsrfCookieName = 'csrftoken'; 
 
     useEffect(() => {
-        const apiurl = 'http://localhost:8000/api/get_user_data';
 
-        fetch(apiurl, {
-            method: 'GET',
-            credentials: 'include',
-        })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                throw new Error('Failed to fetch user info');
-            }
-        })
-        .then(data => {
-            setUserInfo(data);
-        })
-        .catch(error => {
-            console.error('Error fetching user info:', error);
-        });
+        const fetchUserData = () => {
+            const apiurl = 'http://localhost:8000/api/get_user_data';
+
+            fetch(apiurl, {
+                method: 'GET',
+                credentials: 'include',
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch user info');
+                }
+            })
+            .then(data => {
+                setUserInfo(data);
+            })
+            .catch(error => {
+                console.error('Error fetching user info:', error);
+            });
+        }
+        fetchUserData();
+
+
+        const handleOnlineStatusChange = () => {
+            setIsOnline(navigator.onLine);
+            fetchUserData();
+        };
+
+        window.addEventListener('online', handleOnlineStatusChange);
+        window.addEventListener('offline', handleOnlineStatusChange);
+
+        return () => {
+            window.removeEventListener('online', handleOnlineStatusChange);
+            window.removeEventListener('offline', handleOnlineStatusChange);
+        };
+        
 
 
     }, []);
@@ -57,7 +80,7 @@ function Navbar(){
                 <div className="inner">
                     <div className="left">
                         <div className="menu" onClick={handleMenu}>
-                            <button type="button">
+                            <button>
                                 <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg>
                             </button>
                         </div>
@@ -79,12 +102,12 @@ function Navbar(){
                                     <input type="text" placeholder="Search" />
                                 </div>
                             </form>
-                            <button type="button" onClick={navigateToSearch}>
+                            <button onClick={navigateToSearch}>
                                 <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg>
                             </button>
                         </div>
                         <div className="micbox">
-                            <button type="button">
+                            <button>
                                 <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="M12 3c-1.66 0-3 1.37-3 3.07v5.86c0 1.7 1.34 3.07 3 3.07s3-1.37 3-3.07V6.07C15 4.37 13.66 3 12 3zm6.5 9h-1c0 3.03-2.47 5.5-5.5 5.5S6.5 15.03 6.5 12h-1c0 3.24 2.39 5.93 5.5 6.41V21h2v-2.59c3.11-.48 5.5-3.17 5.5-6.41z"></path></svg>
                             </button>
                         </div>
@@ -92,36 +115,44 @@ function Navbar(){
                     <div className="right">
                         <div className="buttons">
                             <div className="upload">
-                                <button type="button">
+                                <button>
                                     <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-6.39l4 1.83V8.56l-4 1.83V6m1-1v3.83L22 7v8l-4-1.83V19H2V5h16z"></path></svg>
                                 </button>
                             </div>
                             <div className="notification">
-                                <button type="button">
+                                <button>
                                     <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm10-2.65V19H4v-1.65l2-1.88v-5.15C6 7.4 7.56 5.1 10 4.34v-.38c0-1.42 1.49-2.5 2.99-1.76.65.32 1.01 1.03 1.01 1.76v.39c2.44.75 4 3.06 4 5.98v5.15l2 1.87zm-1 .42-2-1.88v-5.47c0-2.47-1.19-4.36-3.13-5.1-1.26-.53-2.64-.5-3.84.03C8.15 6.11 7 7.99 7 10.42v5.47l-2 1.88V18h14v-.23z"></path></svg>
                                 </button>
                                 <label>1</label>
                             </div>
                             <div className="profile">
-                                {userInfo ? (
+                                {isOnline ? (
                                     <>
-                                        {userInfo.channelimage ? (
-                                            <button type="button">
-                                                <img alt="s" src={userInfo.channelimage} />
-                                            </button>
+                                        {userInfo ? (
+                                            <>
+                                                {userInfo.channelimage ? (
+                                                    <NavLink to={`/channel/${userInfo.channelid}`}>
+                                                        <button>
+                                                            <img alt="s" src={userInfo.channelimage} />
+                                                        </button>
+                                                    </NavLink>
+                                                ):(
+                                                    <button>
+                                                    <img alt="s" src={logo} />
+                                                </button>
+                                                )}
+                                            </>
                                         ):(
-                                            <button type="button">
-                                            <img alt="s" src={logo} />
-                                        </button>
+                                            <button>
+                                                <img alt="s" src={logo} />
+                                            </button>
                                         )}
                                     </>
-                                    
                                 ):(
-                                    <button type="button">
+                                    <button>
                                         <img alt="s" src={logo} />
                                     </button>
                                 )}
-                                
                             </div>
                         </div>
                     </div>

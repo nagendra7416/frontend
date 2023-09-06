@@ -8,6 +8,7 @@ function Sidebar(){
     const isExplorePage = location.pathname === '/feed/explore';
     const isSubscriptionsPage = location.pathname === '/feed/subscriptions';
     const isLibraryPage = location.pathname === '/feed/library';
+    const isHistoryPage = location.pathname === '/feed/history';
 
 
     return (
@@ -93,12 +94,22 @@ function Sidebar(){
                             </li>
                             <li>
                                 <div className="link home">
-                                    <button>
-                                        <NavLink to='/'>
-                                            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" className="style-scope yt-icon" style={{pointerEvents: 'none'}}><g className="style-scope yt-icon"><path d="M14.97,16.95L10,13.87V7h2v5.76l4.03,2.49L14.97,16.95z M22,12c0,5.51-4.49,10-10,10S2,17.51,2,12h1c0,4.96,4.04,9,9,9 s9-4.04,9-9s-4.04-9-9-9C8.81,3,5.92,4.64,4.28,7.38C4.17,7.56,4.06,7.75,3.97,7.94C3.96,7.96,3.95,7.98,3.94,8H8v1H1.96V3h1v4.74 C3,7.65,3.03,7.57,3.07,7.49C3.18,7.27,3.3,7.07,3.42,6.86C5.22,3.86,8.51,2,12,2C17.51,2,22,6.49,22,12z" className="style-scope yt-icon"></path></g></svg>
-                                            <span>History</span>
-                                        </NavLink>
-                                    </button>
+                                    {isHistoryPage ? (
+                                        <button>
+                                            <NavLink to='/feed/history'>
+                                            <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="M14.97 16.95 10 13.87V7h2v5.76l4.03 2.49-1.06 1.7zM12 2C8.73 2 5.8 3.44 4 5.83V3.02H2V9h6V7H5.62C7.08 5.09 9.36 4 12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8H2c0 5.51 4.49 10 10 10s10-4.49 10-10S17.51 2 12 2z"></path></svg>
+                                                <span>History</span>
+                                            </NavLink>
+                                        </button>
+                                    ):(
+                                        <button>
+                                            <NavLink to='/feed/history'>
+                                                <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" className="style-scope yt-icon" style={{pointerEvents: 'none'}}><g className="style-scope yt-icon"><path d="M14.97,16.95L10,13.87V7h2v5.76l4.03,2.49L14.97,16.95z M22,12c0,5.51-4.49,10-10,10S2,17.51,2,12h1c0,4.96,4.04,9,9,9 s9-4.04,9-9s-4.04-9-9-9C8.81,3,5.92,4.64,4.28,7.38C4.17,7.56,4.06,7.75,3.97,7.94C3.96,7.96,3.95,7.98,3.94,8H8v1H1.96V3h1v4.74 C3,7.65,3.03,7.57,3.07,7.49C3.18,7.27,3.3,7.07,3.42,6.86C5.22,3.86,8.51,2,12,2C17.51,2,22,6.49,22,12z" className="style-scope yt-icon"></path></g></svg>
+                                                <span>History</span>
+                                            </NavLink>
+                                        </button>
+                                    )}
+                                    
                                 </div>
                             </li>
                             <li>

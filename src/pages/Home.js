@@ -2,75 +2,113 @@ import { NavLink } from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import Navbar from "../components/Navbar";
 import Side from "../components/Side";
-import thumbnail from '../assets/thumbnail.webp';
+import thumbnail from '../assets/placeholder.jpg';
+import author from '../assets/author.png';
 import {Helmet} from "react-helmet";
 import axios from 'axios';
 import Sidebar from "../components/Sidebar";
 import LoadingBar from 'react-top-loading-bar';
-import SkeletonLoader from "../components/SkeletonLoader";
-import LazyLoad from "react-lazy-load";
+import NoInternetPage from "./NoInternetPage";
+
 function Home(){
 
     const [videos, setVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [imageLoaded, setImageLoaded] = useState(false);
-    const intersectionObserver = useRef(null);
+    const [delayedLoading, setDelayedLoading] = useState(false);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const containerRef = useRef(null);
 
     axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'; // Replace with your CSRF token header name
     axios.defaults.xsrfCookieName = 'csrftoken'; 
 
+
+
+
+
+    
     useEffect(() => {
-        const apiurl = 'http://localhost:8000/api';
 
-        axios.get(apiurl)
-        .then(response => {
-            setTimeout(() => {
+        const fetchData = () => {
+            const apiurl = 'http://localhost:8000/api';
+
+            axios.get(apiurl)
+            .then(response => {
+                setVideos(response.data);
+                
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 0);
+                setTimeout(() => {
+                    setDelayedLoading(true);
+                }, 1000);
+                
+                
+                
+            })
+            .catch(error => {
+                console.log('error fetching videos', error);
                 setIsLoading(false);
-            }, 0);
-            
-            setVideos(response.data);
-        })
-        .catch(error => {
-            console.log('error fetching videos', error);
-            setIsLoading(false);
-        })
-    }, []);
+            })
+        }
+        fetchData();
+        
 
 
 
-    intersectionObserver.current = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const target = entry.target;
-            target.src = target.getAttribute('data-real-src'); // Replace src with data-real-src
-            intersectionObserver.current.unobserve(target);
-          }
-        });
-      });
-  
-      // Cleanup the Intersection Observer
-        return () => {
-            if (intersectionObserver.current) {
-            intersectionObserver.current.disconnect();
-            }
+
+        const options = {
+            root: null, // Use the viewport as the root
+            rootMargin: '0px', // No margin
+            threshold: 0.5, // Trigger when 50% of the container is visible
+          };
+
+
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    target.src = target.getAttribute('data-real-src'); // Replace src with data-real-src
+                    observer.unobserve(containerRef.current);
+                }
+            });
+        }, options);
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        const handleOnlineStatusChange = () => {
+            setIsOnline(navigator.onLine);
+            fetchData();
         };
 
+        window.addEventListener('online', handleOnlineStatusChange);
+        window.addEventListener('offline', handleOnlineStatusChange);
+      
+          // Cleanup the Intersection Observer
+        return () => {
+            if (containerRef.current) {
+                observer.unobserve(containerRef.current);
+            }
 
-    
+            window.removeEventListener('online', handleOnlineStatusChange);
+            window.removeEventListener('offline', handleOnlineStatusChange);
+        };
 
+    }, []);
 
-
-    
     return (
         
         <>
-            
             <Helmet>
                 <title>(1) YouTube</title>
             </Helmet>
+            
             <LoadingBar
                 color="#ff0000" // Customize the color (e.g., red)
-                height={2}       // Customize the height (4 pixels)
+                height={1.5}       // Customize the height (4 pixels)
                 progress={isLoading ? 30 : 100} // Set progress based on loading state
             />
             <Navbar />
@@ -78,11 +116,15 @@ function Home(){
                 
                 <Side />
                 <Sidebar />
-                <div className="main-scroll">
+                <div className="main-scroll" ref={containerRef}>
                     <div className="inner">
+                        { isOnline ? (
+                            <>
+                            
                         {isLoading ? (
                             <>
-                                <div className="video">
+                                <label>Loading...</label>
+                                {/* <div className="video">
                                     <div className="video-img">
                                         <SkeletonLoader />
                                     </div>
@@ -161,50 +203,55 @@ function Home(){
                                     <div className="video-img">
                                         <SkeletonLoader />
                                     </div>
-                                </div>
+                                </div> */}
 
                             
                             </>
                         ):(
                             <>
-                            {videos.map(video => (
-                                <div className="video" key={video.id}>
-                                    <div className="video-img">
-                                        <label>{video.duration}</label>
-                                        <NavLink to={`/watch/${video.id}`}>
-                                            <img alt="s" src={video.image} data-real-src={thumbnail} />
-                                        </NavLink>
-                                    </div>
-                                    <div className="video-detail">
-                                        <div className="video-left">
-                                            <div className="video-author-img">
+                                {videos.map(video => (
+                                    <NavLink to={`/watch/${video.id}`} key={video.id}>
+                                        <div className="video" key={video.id}>
+                                            <div className="video-img">
+                                                <label>{video.duration}</label>
                                                 
-                                                <NavLink to='/'>
-                                                    <img alt="s" src={video.channelimg} />
-                                                </NavLink>
+                                                <img alt="s" src={delayedLoading ? video.image : thumbnail} data-real-src={video.image} />
+                                                
+                                            </div>
+                                            <div className="video-detail">
+                                                <div className="video-left">
+                                                    <div className="video-author-img">
+                                                        
+                                                        
+                                                            <img alt="s" src={delayedLoading ? video.channelimg : author} data-real-src={video.channelimg} />
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div className="video-right">
+                                                    <h4>
+                                                        
+                                                            {video.title}
+                                                        
+                                                    </h4>
+                                                    <label>
+                                                        
+                                                            {video.author}
+                                                        
+                                                    </label>
+                                                    <div>
+                                                        <span>{video.views} views &nbsp;</span>
+                                                        <span>&bull; {video.published}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="video-right">
-                                            <h4>
-                                                <NavLink to={`/watch/${video.id}`}>
-                                                    {video.title}
-                                                </NavLink>
-                                            </h4>
-                                            <label>
-                                                <NavLink to='/'>
-                                                    {video.author}
-                                                </NavLink>
-                                            </label>
-                                            <div>
-                                                <span>{video.views} views &nbsp;</span>
-                                                <span>&bull; {video.published}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                            
+                                    </NavLink>
+                                ))}
                             </>
+                        )}
+                        </>
+                        ):(
+                            <NoInternetPage />
                         )}
                     </div>
                 </div>

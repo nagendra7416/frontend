@@ -8,6 +8,10 @@ import Library from './pages/Library';
 import VideoDetail from './pages/VideoDetail';
 import HiddenSideBar from './components/HiddenSideBar';
 import Search from './pages/Search';
+import History from './pages/History';
+import ChannelHome from './pages/user/ChannelHome';
+import Channel from './components/channel/Channel';
+import ChannelVideos from './pages/user/ChannelVideos';
 
 function App() {
   return (
@@ -19,7 +23,13 @@ function App() {
         <Route exact path='/feed/explore' element={<Explore />}></Route>
         <Route exact path='/feed/subscriptions' element={<Subscriptions />}></Route>
         <Route exact path='/feed/library' element={<Library />}></Route>
+        <Route exact path='/feed/history' element={<History />}></Route>
         <Route exact path='/search' element={<Search />}></Route>
+        <Route exact path='/channel' element={<Channel />}>
+            <Route exact path=':channelId' element={<ChannelHome />}></Route>
+            <Route exact path=':channelId/videos' element={<ChannelVideos />}></Route>
+        </Route>
+        
       </Routes>
     </>
   );
