@@ -9,9 +9,10 @@ import VideoDetail from './pages/VideoDetail';
 import HiddenSideBar from './components/HiddenSideBar';
 import Search from './pages/Search';
 import History from './pages/History';
-import ChannelHome from './pages/user/ChannelHome';
+import ChannelHome from './components/channel/ChannelHome';
 import Channel from './components/channel/Channel';
-import ChannelVideos from './pages/user/ChannelVideos';
+import ChannelVideos from './components/channel/ChannelVideos';
+import ChannelAbout from './components/channel/ChannelAbout';
 
 function App() {
   return (
@@ -28,8 +29,8 @@ function App() {
         <Route exact path='/channel' element={<Channel />}>
             <Route exact path=':channelId' element={<ChannelHome />}></Route>
             <Route exact path=':channelId/videos' element={<ChannelVideos />}></Route>
+            <Route exact path=':channelId/about' element={<ChannelAbout />}></Route>
         </Route>
-        
       </Routes>
     </>
   );

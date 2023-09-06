@@ -14,7 +14,6 @@ function Home(){
 
     const [videos, setVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [imageLoaded, setImageLoaded] = useState(false);
     const [delayedLoading, setDelayedLoading] = useState(false);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const containerRef = useRef(null);
@@ -113,7 +112,6 @@ function Home(){
             />
             <Navbar />
             <div className="main">
-                
                 <Side />
                 <Sidebar />
                 <div className="main-scroll" ref={containerRef}>

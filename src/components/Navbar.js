@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 
-
 function Navbar(){
     const [userInfo, setUserInfo] = useState([]);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -36,7 +35,7 @@ function Navbar(){
                 }
             })
             .then(data => {
-                setUserInfo(data);
+                setUserInfo(data.user);
             })
             .catch(error => {
                 console.error('Error fetching user info:', error);

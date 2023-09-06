@@ -247,13 +247,13 @@ function Subscriptions(){
                                                                     {subVideos.map(video => (
                                                                         <div className="video" key={video.id}>
                                                                             <div className="video-img">
-                                                                                <img alt="s" src={video.image} />
+                                                                                <img alt="s" src={delayedLoading ? video.image : thumbnail} />
                                                                             </div>
                                                                             <div className="video-detail">
                                                                                 <div className="video-left">
                                                                                     <div className="video-author-img">
                                                                                         <NavLink to='/'>
-                                                                                            <img alt="s" src={video.authorimg} />
+                                                                                            <img alt="s" src={delayedLoading ? video.authorimg : author} />
                                                                                         </NavLink>
                                                                                     </div>
                                                                                 </div>
