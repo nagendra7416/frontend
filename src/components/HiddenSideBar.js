@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-
+import thumbnail from '../assets/thumbnail.webp';
 
 function HiddenSideBar(){
 
@@ -184,20 +184,26 @@ function HiddenSideBar(){
                             </ul>
                         </div>
                             <div className="links">
-                                <p style={{marginBottom: '10px'}}>Subscriptions</p>
                                 <ul>
-                                        <li>
-                                            <div className="link home">
-                                                <button>
-                                                    <NavLink to='/'>
-                                                        <div className="linkimmg" style={{minWidth: '24px', width: '24px', height: '24px', borderRadius: '50%', overflow: 'hidden', marginRight: '20px'}}>
-                                                            <img alt="s" src="logo.jpg" data-real-src="{{subscriber.channelimg.url}}" width="100%" height="100%" />
-                                                        </div>
-                                                        <span>Marvel</span>
-                                                    </NavLink>
-                                                </button>
-                                            </div>
-                                        </li>
+                                    
+                                        <>
+                                            <p style={{marginBottom: '10px'}}>Subscriptions</p>
+                                            
+                                                <li>
+                                                    <div className="link home">
+                                                        <button>
+                                                            <NavLink to={`/`}>
+                                                                <div className="linkimmg" style={{minWidth: '24px', width: '24px', height: '24px', borderRadius: '50%', overflow: 'hidden', marginRight: '20px'}}>
+                                                                    <img alt="s" src={thumbnail} data-real-src="" width="100%" height="100%" />
+                                                                </div>
+                                                                <span>Marvel</span>
+                                                            </NavLink>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            
+                                        </>
+                                       
                                 </ul>
                             </div>
                     <div className="links">

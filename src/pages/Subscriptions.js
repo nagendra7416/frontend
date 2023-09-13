@@ -9,7 +9,7 @@ import NoInternetPage from "./NoInternetPage";
 import thumbnail from '../assets/placeholder.jpg';
 import author from '../assets/author.png';
 
-function Subscriptions(){
+function Subscriptions({ userInfo }){
     const [subVideos, setSubVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -101,7 +101,7 @@ function Subscriptions(){
                     height={1.5}       // Customize the height (4 pixels)
                     progress={isLoading ? 30 : 100} // Set progress based on loading state
                 />
-            <Navbar />
+            <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
                 <Sidebar />
@@ -120,6 +120,7 @@ function Subscriptions(){
                                                         <div className="video" key={video.id}>
                                                             <div className="video-img">
                                                                 <img alt="s" src={delayedLoading ? video.image : thumbnail} data-real-src={video.image} />
+                                                                <label>{video.duration}</label>
                                                             </div>
                                                             <div className="video-detail">
                                                                 <div className="video-left">
@@ -163,6 +164,7 @@ function Subscriptions(){
                                                                 <div className="video" key={video.id}>
                                                                     <div className="video-img">
                                                                         <img alt="s" src={delayedLoading ? video.image : thumbnail} data-real-src={video.image} />
+                                                                        <label>{video.duration}</label>
                                                                     </div>
                                                                     <div className="video-detail">
                                                                         <div className="video-left">
@@ -207,6 +209,7 @@ function Subscriptions(){
                                                                         <div className="video" key={video.id}>
                                                                             <div className="video-img">
                                                                                 <img alt="s" src={delayedLoading ? video.image : thumbnail} data-real-src={video.image} />
+                                                                                <label>{video.duration}</label>
                                                                             </div>
                                                                             <div className="video-detail">
                                                                                 <div className="video-left">
@@ -248,6 +251,7 @@ function Subscriptions(){
                                                                         <div className="video" key={video.id}>
                                                                             <div className="video-img">
                                                                                 <img alt="s" src={delayedLoading ? video.image : thumbnail} />
+                                                                                <label>{video.duration}</label>
                                                                             </div>
                                                                             <div className="video-detail">
                                                                                 <div className="video-left">

@@ -9,7 +9,7 @@ import LoadingBar from 'react-top-loading-bar';
 import thumbnail from '../assets/placeholder.jpg';
 import NoInternetPage from "./NoInternetPage";
 
-function Explore(){
+function Explore({ userInfo }){
 
     const [videos, setVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -90,52 +90,11 @@ function Explore(){
                     height={1.5}       // Customize the height (4 pixels)
                     progress={isLoading ? 30 : 100} // Set progress based on loading state
                 />
-            <Navbar />
+            <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
                 <Sidebar />
                 <div className="main-scroll" ref={containerRef}>
-                    {/* <div className="inner">
-                        {isLoading ? (
-                            <label>Loading...</label>
-                        ):(
-                            <>
-                                {videos.map(video => (
-                                    <div className="video" key={video.id}>
-                                        <div className="video-img">
-                                            <img alt="s" src={video.image} />
-                                        </div>
-                                        <div className="video-detail">
-                                            <div className="video-left">
-                                                <div className="video-author-img">
-                                                    <NavLink to='/'>
-                                                        <img alt="s" src={video.authorimg} />
-                                                    </NavLink>
-                                                </div>
-                                            </div>
-                                            <div className="video-right">
-                                                <h4>
-                                                    <NavLink to='/'>
-                                                        {video.title}
-                                                    </NavLink>
-                                                </h4>
-                                                <label>
-                                                    <NavLink to='/'>
-                                                        {video.author}
-                                                    </NavLink>
-                                                </label>
-                                                <div>
-                                                    <span>{video.views} views</span>
-                                                    <span>&bull; {video.published}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </>
-                        )}
-                        
-                    </div> */}
 
                     {isOnline ? (
                         <>

@@ -2,21 +2,81 @@ import { Helmet } from "react-helmet";
 import Navbar from "../components/Navbar";
 import Side from "../components/Side";
 import Sidebar from "../components/Sidebar";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import thumbnail from '../assets/placeholder.jpg';
+import LoadingBar from "react-top-loading-bar";
 
-function History(){
+function History({ userInfo }){
+    const [historyvideos, setHistoryVideos] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [delayedLoading, setDelayedLoading] = useState(false);
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/library_videos_json`, {
+            method: 'GET',
+            credentials: 'include',
+        })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Failed to fetch liked videos');
+            }
+        })
+        .then(data => {
+            console.log(data.history);
+            setHistoryVideos(data.history);
+            setIsLoading(false);
+            setTimeout(() => {
+                setDelayedLoading(true);
+            }, 1000);
+        })
+        .catch(error => {
+            setIsLoading(false);
+            console.error('Error fetching user info:', error);
+        });
+
+    }, [])
     return (
         <>
             <Helmet>
                 <title>History - YouTube</title>
             </Helmet>
 
-            <Navbar />
+            <LoadingBar color="#ff0000" height={1.5} progress={isLoading ? 30 : 100} />
+
+            <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
                 <Sidebar />
                 <div className="main-scroll">
-                    <div className="inner">
-                        <h2>History</h2>
+                    <div className="inners" style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <h2 style={{padding: '20px', maxWidth: '1284px', width: '95%'}}>History</h2>
+                        <div className="explorecon">
+                            {historyvideos.map((hvideo) => (
+                                <div className="explores" key={hvideo.id}>
+                                    <NavLink to={`/watch/${hvideo.id}`}>
+                                        <div className="explore">
+                                            <div className="leftimg">
+                                                <img alt="s" src={delayedLoading ? hvideo.image : thumbnail} data-real-src={hvideo.image} />
+                                                <span>
+                                                    <p>{hvideo.duration}</p>
+                                                </span>
+                                            </div> 
+                                            <div className="rightdetail">
+                                                <h3>{hvideo.title}</h3>
+                                                <div className="author">                                    
+                                                    <label onClick={() => {'/'}}>{hvideo.author}</label>                                    
+                                                    <span> &bull; <label style={{margin: '0 5px'}}>{hvideo.views} views</label> &bull; <label style={{margin: '0 5px'}}>{hvideo.published}</label></span>
+                                                </div>
+                                                <p>{hvideo.description}</p>                
+                                            </div> 
+                                        </div>  
+                                    </NavLink>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

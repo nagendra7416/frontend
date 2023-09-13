@@ -1,52 +1,62 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from '../assets/logo.jpg';
 import { useState, useEffect } from "react";
 import axios from "axios";
+import LoadingBar from "react-top-loading-bar";
 
-
-function Navbar(){
-    const [userInfo, setUserInfo] = useState([]);
+function Navbar({ userInfo }){
+    const [query, setQuery] = useState('');
+    const [some, setSome] = useState([]);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [isLoading, setIsLoading] = useState(false);
     let navigate = useNavigate();
+    const location = useLocation();
 
-    function navigateToSearch(){
-        navigate('/search');
+    const handleSearch = () => {
+        if (query === ''){
+
+        } else {
+            navigate(`/search?query=${query}`);
+
+            fetch(`http://localhost:8000/api/search?query=${query}`, {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                setSome(data);
+                setIsLoading(false);
+            })
+            .catch((error) => console.error('Error searching:', error));
+        }
     }
-    function navigateToChannel(){
-        navigate(`/channel/${userInfo.channelid}`);
-    }
+
     axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'; // Replace with your CSRF token header name
-    axios.defaults.xsrfCookieName = 'csrftoken'; 
+    axios.defaults.xsrfCookieName = 'csrftoken';
+    
+    
+    const handleKeyPress = (event) => {
+        if(query == ''){
+
+        } else {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                setIsLoading(true);
+                handleSearch();
+            }
+        }
+    };
 
     useEffect(() => {
 
-        const fetchUserData = () => {
-            const apiurl = 'http://localhost:8000/api/get_user_data';
-
-            fetch(apiurl, {
-                method: 'GET',
-                credentials: 'include',
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to fetch user info');
-                }
-            })
-            .then(data => {
-                setUserInfo(data.user);
-            })
-            .catch(error => {
-                console.error('Error fetching user info:', error);
-            });
+        const queryParams = new URLSearchParams(location.search);
+        const currentQuery = queryParams.get('query')
+        if (currentQuery){
+            setQuery(currentQuery);
         }
-        fetchUserData();
-
 
         const handleOnlineStatusChange = () => {
             setIsOnline(navigator.onLine);
-            fetchUserData();
         };
 
         window.addEventListener('online', handleOnlineStatusChange);
@@ -56,9 +66,6 @@ function Navbar(){
             window.removeEventListener('online', handleOnlineStatusChange);
             window.removeEventListener('offline', handleOnlineStatusChange);
         };
-        
-
-
     }, []);
 
     function handleMenu(){
@@ -75,6 +82,11 @@ function Navbar(){
     }
     return(
         <>
+            <LoadingBar
+                color="#ff0000" // Customize the color (e.g., red)
+                height={1.5}       // Customize the height (4 pixels)
+                progress={isLoading ? 30 : 100} // Set progress based on loading state
+            />
             <nav className="nav">
                 <div className="inner">
                     <div className="left">
@@ -96,12 +108,12 @@ function Navbar(){
                     </div>
                     <div className="center">
                         <div className="searchbox">
-                            <form action="#">
+                            <form>
                                 <div className="container">
-                                    <input type="text" placeholder="Search" />
+                                    <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={handleKeyPress} placeholder="Search" />
                                 </div>
                             </form>
-                            <button onClick={navigateToSearch}>
+                            <button onClick={handleSearch}>
                                 <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg>
                             </button>
                         </div>

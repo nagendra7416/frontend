@@ -1,72 +1,46 @@
-import { useState, useEffect } from "react";
-import thumbnail from '../../assets/placeholder.jpg'
 import { useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { NavLink } from "react-router-dom";
 import Navbar from "../Navbar";
 import Side from "../Side";
 import Sidebar from "../Sidebar";
-import LoadingBar from "react-top-loading-bar";
-import Channel from "./Channel";
+import { useEffect, useState } from "react";
+import AuthorChannel from "./AuthorChannel";
+import { NavLink } from "react-router-dom";
+import thumbnail from '../../assets/placeholder.jpg';
+import { Helmet } from "react-helmet";
 
-function ChannelVideos({ userInfo }){
+function AuthorChannelVideos({ userInfo }){
+    const [authorInfo, setAuthorInfo] = useState([]);
     const [videos, setVideos] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [delayedLoading, setDelayedLoading] = useState(false);
-    
-    const { channelId } = useParams();
+    const { authorslug } = useParams();
+    const authorslu = authorslug.replace('@', '');
+
+    const onDataReceivedFromChild = (data) => {
+        setAuthorInfo(data.author_data[0]);
+        setVideos(data.videos_data);
+        setTimeout(() => {
+            setDelayedLoading(true);
+        }, 1000);
+    }
 
     useEffect(() => {
-        
-        const videos_data = () => {
-            fetch('http://localhost:8000/api/user_videos', {
-                method: 'GET',
-                credentials: 'include',
-            })
-            .then(response => {
-                if(response.status === 200){
-                    return response.json();
-                } else {
-                    throw new Error('failed to fetch user videos..');
-                }
-            })
-            .then(data => {
-                setVideos(data.videos);
-                setIsLoading(false);
-                setTimeout(() => {
-                    setDelayedLoading(true);
-                }, 100);
-            })
-            .catch(error => {
-                console.error('Error fetching user info:', error);
-            });
-        }
-        videos_data();
 
-    }, []);
-
+    }, [authorslu])
 
     return (
         <>
             <Helmet>
-                <title>{`${userInfo.channeluser} - YouTube`}</title>
+                <title>{`${authorInfo.channelname} - YouTube`}</title>
             </Helmet>
-
-            <LoadingBar
-                color="#ff0000" // Customize the color (e.g., red)
-                height={1.5}       // Customize the height (4 pixels)
-                progress={isLoading ? 30 : 100} // Set progress based on loading state
-            />
-
-<Navbar userInfo={userInfo} />
+            <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
                 <Sidebar />
                 <div className="main-scroll">
                     <div className="channellayer">
-                        <Channel channelId={channelId} />
+                        <AuthorChannel userInfo={userInfo} authorslug={authorslu} onDataReceived={onDataReceivedFromChild} />
                         <div className="channelvideoscon">
-                            <h4>Videos ({userInfo.videoslength})</h4>
+                            <h4>Videos ({authorInfo.videoslength})</h4>
                             <div className="channelvideoscon-inner">
                                 {videos.length <= 4 ? (
                                     <>
@@ -138,4 +112,4 @@ function ChannelVideos({ userInfo }){
         </>
     )
 }
-export default ChannelVideos;
+export default AuthorChannelVideos;
