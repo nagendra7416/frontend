@@ -125,15 +125,6 @@ function VideoDetail({ userInfo }) {
 
         const videoid = videoId;
 
-        axiosInstance.get(`http://localhost:8000/api/${videoid}/get_comments_json`)
-        .then(response => {
-            setComments(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching comments', error);
-            setIsLoading(false);
-        });
-
         axiosInstance.get(`http://localhost:8000/api/get_video/${videoid}`)
         .then(response => {
             setIsLoading(false);
@@ -149,7 +140,8 @@ function VideoDetail({ userInfo }) {
         axiosInstance.get(`http://localhost:8000/api/explore`)
         .then(response => {
             setIsLoading(false);
-            setVideos(response.data);
+            setVideos(response.data.video_list);
+            console.log(response.data.video_list);
             setTimeout(() => {
                 setDelayedLoading(true);
             }, 1000);

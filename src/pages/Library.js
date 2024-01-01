@@ -7,9 +7,10 @@ import LoadingBar from 'react-top-loading-bar';
 import NoInternetPage from "./NoInternetPage";
 import { NavLink, useNavigate } from "react-router-dom";
 import thumbnail from '../assets/placeholder.jpg';
+import LazyImage from "./LazyImage";
 
 
-function Library({ userInfo }){
+function Library({ userInfo, subdata }){
     const [isLoading, setIsLoading] = useState(true);
     const [historyvideos, setHistoryVideos] = useState([]);
     const [likedvideos, setLikedVideos] = useState([]);
@@ -90,7 +91,7 @@ function Library({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {isOnline ? (
                         <>
@@ -108,14 +109,14 @@ function Library({ userInfo }){
                                                 </label>
                                             </div>
                                             <div className="subinner">
-                                                {historyvideos.length < 4 ? (
+                                                {historyvideos.length <= 4 ? (
                                                     <>
                                                         {historyvideos.map((hvideo) => (
                                                             
                                                             <div className="subpost" key={hvideo.id}>
                                                                 <NavLink to='/'>
                                                                     <div className="subimg">
-                                                                        <img alt='s' src={delayedLoading ? hvideo.image : thumbnail}></img>
+                                                                        <LazyImage alt={hvideo.id} src={thumbnail} data-real-src={hvideo.image} />
                                                                         <span>
                                                                             <p>{hvideo.duration}</p>
                                                                         </span>
@@ -136,6 +137,8 @@ function Library({ userInfo }){
                                                         <div className="subpost"></div>
                                                         <div className="subpost"></div>
                                                         <div className="subpost"></div>
+                                                        <div className="subpost"></div>
+                                                        <div className="subpost"></div>
                                                     </>
                                                 ):(
                                                     <>
@@ -143,7 +146,7 @@ function Library({ userInfo }){
                                                             <div className="subpost" key={hvideo.id}>
                                                                 <NavLink to='/'>
                                                                     <div className="subimg">
-                                                                        <img alt='s' src={delayedLoading ? hvideo.image : thumbnail}></img>
+                                                                        <LazyImage alt={hvideo.id} src={thumbnail} data-real-src={hvideo.image} />
                                                                         <span>
                                                                             <p>{hvideo.duration}</p>
                                                                         </span>
@@ -180,13 +183,13 @@ function Library({ userInfo }){
                                                 </label>
                                             </div>
                                             <div className="subinner">
-                                                {watchlater.length < 4 ? (
+                                                {watchlater.length <= 4 ? (
                                                     <>
                                                         {watchlater.map((wvideo) => (
                                                             <div className="subpost" key={wvideo.id}>
                                                                 <NavLink to={`/watch/${wvideo.id}`}>
                                                                     <div className="subimg">
-                                                                        <img alt='s' src={delayedLoading ? wvideo.image : thumbnail}></img>
+                                                                        <LazyImage alt={wvideo.id} src={thumbnail} data-real-src={wvideo.image} />
                                                                         <span>
                                                                             <p>{wvideo.duration}</p>
                                                                         </span>
@@ -212,7 +215,7 @@ function Library({ userInfo }){
                                                             <div className="subpost" key={hvideo.id}>
                                                                 <NavLink to={`/watch/${hvideo.id}`}>
                                                                     <div className="subimg">
-                                                                        <img alt='s' src={delayedLoading ? hvideo.image : thumbnail}></img>
+                                                                        <LazyImage alt={hvideo.id} src={thumbnail} data-real-src={hvideo.image} />
                                                                         <span>
                                                                             <p>{hvideo.duration}</p>
                                                                         </span>
@@ -249,13 +252,13 @@ function Library({ userInfo }){
                                                 </label>
                                             </div>
                                             <div className="subinner">
-                                                {playlists.length < 4 ? (
+                                                {playlists.length <= 4 ? (
                                                     <>
                                                         {playlists.map((playlist) => (
                                                             <div className="subpost" key={playlist.id}>
                                                                 <NavLink to={`/watch/${playlist.id}`}>
                                                                     <div className="subimg">
-                                                                        <img alt='s' src={delayedLoading ? playlist.image : thumbnail}></img>
+                                                                        <LazyImage alt={playlist.id} src={thumbnail} data-real-src={playlist.image} />
                                                                         <div className="over">
                                                                             <label>2</label>
                                                                             <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" className="style-scope yt-icon"><g className="style-scope yt-icon"><path d="M22,7H2v1h20V7z M13,12H2v-1h11V12z M13,16H2v-1h11V16z M15,19v-8l7,4L15,19z" className="style-scope yt-icon"></path></g></svg>
@@ -282,7 +285,7 @@ function Library({ userInfo }){
                                                             <div className="subpost" key={hvideo.id}>
                                                                 <NavLink to={`/watch/${hvideo.id}`}>
                                                                     <div className="subimg">
-                                                                        <img alt='s' src={delayedLoading ? hvideo.image : thumbnail}></img>
+                                                                        <LazyImage alt={hvideo.id} src={thumbnail} data-real-src={hvideo.image} />
                                                                         <span>
                                                                             <p>{hvideo.duration}</p>
                                                                         </span>
@@ -319,14 +322,14 @@ function Library({ userInfo }){
                                                 </label>
                                             </div>
                                             <div className="subinner">
-                                                {likedvideos.length < 4 ? (
+                                                {likedvideos.length <= 4 ? (
                                                     <>
                                                         {likedvideos.map((hvideo) => (
                                                             
                                                                 <div className="subpost" key={hvideo.id}>
                                                                     <NavLink to={`/watch/${hvideo.id}`}>
                                                                         <div className="subimg">
-                                                                            <img alt='s' src={delayedLoading ? hvideo.image : thumbnail}></img>
+                                                                            <LazyImage alt={hvideo.id} src={thumbnail} data-real-src={hvideo.image} />
                                                                             <span>
                                                                                 <p>{hvideo.duration}</p>
                                                                             </span>
@@ -354,7 +357,7 @@ function Library({ userInfo }){
                                                             <div className="subpost" key={hvideo.id}>
                                                                 <NavLink to={`/watch/${hvideo.id}`}>
                                                                     <div className="subimg">
-                                                                        <img alt='s' src={delayedLoading ? hvideo.image : thumbnail}></img>
+                                                                        <LazyImage alt={hvideo.id} src={thumbnail} data-real-src={hvideo.image} />
                                                                         <span>
                                                                             <p>{hvideo.duration}</p>
                                                                         </span>

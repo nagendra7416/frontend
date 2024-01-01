@@ -8,8 +8,9 @@ import Sidebar from "../components/Sidebar";
 import LoadingBar from 'react-top-loading-bar';
 import thumbnail from '../assets/placeholder.jpg';
 import NoInternetPage from "./NoInternetPage";
+import LazyImage from "./LazyImage";
 
-function Explore({ userInfo }){
+function Explore({ userInfo, subdata }){
 
     const [videos, setVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +26,7 @@ function Explore({ userInfo }){
             axios.get(apiurl)
             .then(response => {
                 setIsLoading(false);
-                setVideos(response.data);
+                setVideos(response.data.video_list);
                 setTimeout(() => {
                     setDelayedLoading(true);
                 }, 1000);
@@ -93,7 +94,7 @@ function Explore({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll" ref={containerRef}>
 
                     {isOnline ? (
@@ -112,7 +113,7 @@ function Explore({ userInfo }){
                                                             <NavLink to='/'>
                                                                 <div className="explore">
                                                                     <div className="leftimg">
-                                                                        <img alt="s" src={delayedLoading ? video.image : thumbnail} data-real-src={video.image} />
+                                                                        <LazyImage src={thumbnail} data-real-src={video.image} alt={video.id} />
                                                                         <span>
                                                                             <p>{video.duration}</p>
                                                                         </span>

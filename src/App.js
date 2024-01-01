@@ -1,4 +1,5 @@
 import './App.css';
+import './style.css';
 import './assets/script.js';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
@@ -16,9 +17,17 @@ import { useEffect, useState } from 'react';
 import AuthorChannelHome from './components/authorchannel/AuthorChannelHome';
 import AuthorChannelVideos from './components/authorchannel/AuthorChannelVideos';
 import AuthorChannelAbout from './components/authorchannel/AuthorChannelAbout';
+import WatchLaterVideos from './pages/WatchLaterVideos';
+import LikedVideos from './pages/LikedVideos';
+import ChannelChannels from './components/channel/ChannelChannels';
+import StudioHome from './components/studio/StudioHome';
+import StudioContent from './components/studio/StudioContent';
+
+
 
 function App() {
   const [userInfo, setUserInfo] = useState([]);
+  const [subdata, setSubData] = useState([]);
 
   useEffect(() => {
         fetch(`http://localhost:8000/api/get_user_data`, {
@@ -34,6 +43,7 @@ function App() {
         })
         .then(data => {
             setUserInfo(data.user);
+            setSubData(data.user.subscribers);
         })
         .catch(error => {
             console.error('Error fetching user info:', error);
@@ -41,24 +51,30 @@ function App() {
   }, [])
   return (
     <>
-    <HiddenSideBar />
+    <HiddenSideBar subdata={subdata} />
       <Routes>
-        <Route exact path='/' element={<Home userInfo={userInfo} />}></Route>
-        <Route exact path='/watch/:videoId' element={<VideoDetail userInfo={userInfo} />}></Route>
-        <Route exact path='/feed/explore' element={<Explore userInfo={userInfo} />}></Route>
-        <Route exact path='/feed/subscriptions' element={<Subscriptions userInfo={userInfo} />}></Route>
-        <Route exact path='/feed/library' element={<Library userInfo={userInfo} />}></Route>
-        <Route exact path='/feed/history' element={<History userInfo={userInfo} />}></Route>
-        <Route exact path='/search' element={<Search userInfo={userInfo} />}></Route>
+        <Route exact path='/' element={<Home userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/watch/:videoId' element={<VideoDetail userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/feed/explore' element={<Explore userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/feed/subscriptions' element={<Subscriptions userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/feed/library' element={<Library userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/feed/history' element={<History userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/feed/playlist/list=WL' element={<WatchLaterVideos userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/feed/playlist/list=LL' element={<LikedVideos userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/search' element={<Search userInfo={userInfo} subdata={subdata} />}></Route>
         
-        <Route exact path='/channel/:channelId' element={<ChannelHome userInfo={userInfo} />}></Route>
-        <Route exact path='/channel/:channelId/videos' element={<ChannelVideos userInfo={userInfo} />}></Route>
-        <Route exact path='/channel/:channelId/about' element={<ChannelAbout userInfo={userInfo} />}></Route>
+        <Route exact path='/c/:channelslug' element={<ChannelHome userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/c/:channelslug/videos' element={<ChannelVideos userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/c/:channelslug/channels' element={<ChannelChannels userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/c/:channelslug/about' element={<ChannelAbout userInfo={userInfo} subdata={subdata} />}></Route>
 
 
-        <Route path='/:authorslug' element={<AuthorChannelHome userInfo={userInfo} />}></Route>
-        <Route path='/:authorslug/videos' element={<AuthorChannelVideos userInfo={userInfo} />}></Route>
-        <Route path='/:authorslug/about' element={<AuthorChannelAbout userInfo={userInfo} />}></Route>
+        <Route exact path='/:authorslug' element={<AuthorChannelHome userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/:authorslug/videos' element={<AuthorChannelVideos userInfo={userInfo} subdata={subdata} />}></Route>
+        <Route exact path='/:authorslug/about' element={<AuthorChannelAbout userInfo={userInfo} subdata={subdata} />}></Route>
+
+        <Route exact path='/studio/:channelslug' element={<StudioHome userInfo={userInfo} />}></Route>
+        <Route exact path='/studio/:channelslug/videos' element={<StudioContent userInfo={userInfo} />}></Route>
       </Routes>
     </>
   );

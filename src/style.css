@@ -1,0 +1,438 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body 
+{
+    overflow-x: hidden;
+}
+
+.navbar 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+
+    z-index: 1000;
+}
+.navbar .inner 
+{
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    position: relative;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    /* padding: 12px 24px 12px 16px; */
+    color: #fff;
+
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar .inner .left 
+{
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+}
+.navbar .inner .left .menu 
+{
+    margin: 8px;
+}
+.navbar .inner .left .menu button
+{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.navbar .inner .left .menu button svg 
+{
+    width: 24px;
+    height: 24px;
+    fill: #5e5e5e;
+}
+
+.navbar .inner .left .logo
+{
+    margin-left: 16px;
+    margin-right: 20px;
+}
+.navbar .inner .left .logo img 
+{
+    padding-top: 4px;
+    height: 24px;
+}
+
+
+
+
+
+
+
+.navbar .center
+{
+    display: flex;
+    align-items: center;
+}
+.navbar .center .searchlayer 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.navbar .center .searchlayer form input 
+{
+    width: 330px;
+    height: 36px;
+    padding-left: 56px;
+    padding-right: 56px;
+    line-height: 18px;
+    color: black;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    font-size: 15px;
+    white-space: initial;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+
+
+.navbar .right 
+{
+    padding-right: 24px;
+}
+
+.navbar .right .links
+{
+    display: flex;
+    align-items: center;
+}
+.navbar .right .links .help 
+{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.navbar .right .links .help button
+{
+    /* padding: 8px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+.navbar .right .links .help button svg
+{
+    width: 24px;
+    height: 24px;
+}
+
+
+.navbar .right .links .create 
+{
+    display: flex;
+    align-items: center;
+}
+.navbar .right .links .create button
+{
+    display: flex;
+    align-items: center;
+
+    margin: 0 8px;
+    padding: 0 8px;
+    border: .5px solid lightgray;
+    background: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.navbar .right .links .create button svg 
+{
+    width: 24px;
+    height: 24px;
+    padding: 6px 0;
+    fill: #f00;
+}
+.navbar .right .links .create button .createlabel 
+{
+    padding-left: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 6px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.navbar .right .links .img 
+{
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+}
+.navbar .right .links .img button
+{
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+.navbar .right .links .img button img 
+{
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+.main 
+{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: flex-start;
+    padding-top: 64px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.main .studioside
+{
+    /* width: 71px; */
+    width: 250px;
+    height: calc(100vh - 64px);
+    background: white;
+    border-right: .5px solid rgb(214, 214, 214);
+    transition: .4s;
+}
+.main .studioside.active 
+{
+    width: 71px;
+    transition: .4s;
+}
+.main .studioside .studioinner 
+{
+    height: calc(100vh - 64px);
+}
+.main .studioside .channelimage 
+{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 18px 0;
+
+}
+.main .studioside .channelimage .img 
+{
+    width: 112px;
+    height: 112px;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.main .studioside .channelimage .img img 
+{
+    width: 100%;
+}
+.main .studioside .channelimage label 
+{
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #0d0d0d;
+    padding-top: 14px;
+}
+.main .studioside .channelimage span 
+{
+    font-weight: 400;
+    letter-spacing: 0.011em;
+    font-size: 12px;
+    line-height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #606060;
+    padding-top: calc(21px - 12px - 7px);
+}
+
+
+
+.main .studioside.active .channelimage
+{
+    height: 60px;
+    margin: 0;
+}
+.main .studioside.active .channelimage .img
+{
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+}
+.main .studioside.active .channelimage label
+{
+    display: none;
+}
+.main .studioside.active .channelimage span 
+{
+    display: none;
+}
+
+
+
+.main .studioside .studiolinks
+{
+    width: 100%;
+    height: calc(100vh - 270px);
+    background: transparent;
+    overflow-y: scroll;
+    margin-bottom: 50px;
+}
+.main .studioside.active .studiolinks
+{
+    height: calc(100vh - 126px);
+}
+.main .studioside .studiolinks::-webkit-scrollbar
+{
+    width: 0;
+}
+.main .studioside .studiolinks ul 
+{
+    width: 100%;
+}
+.main .studioside .studiolinks ul li
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.main .studioside .studiolinks ul li a 
+{
+    width: 100%;
+    text-decoration: none;
+}
+.main .studioside .studiolinks ul li a button
+{
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.main .studioside .studiolinks ul li a button svg 
+{
+    width: 24px;
+    height: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+}
+.main .studioside .studiolinks ul li a button label 
+{
+    font-size: 13px;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.main .studioside .studiolinks ul li.active button
+{
+    background: whitesmoke;
+}
+.main .studioside .studiolinks ul li.active a button svg
+{
+    fill: #cc0000;
+}
+.main .studioside .studiolinks ul li.active a button label
+{
+    color: #cc0000;
+}
+
+
+.main .studioside.active .studiolinks ul li button svg 
+{
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+}
+.main .studioside.active .studiolinks ul li button label 
+{
+    width: 0;
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+.main .studioscroll 
+{
+    width: calc(100vw - 250px);
+    height: calc(100vh - 64px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    transition: .4s;
+}
+.main .studioscroll.active 
+{
+    width: calc(100vw - 71px);
+    transition: .4s;
+}
+.main .studioscroll .inner 
+{
+    width: 100%;
+    padding: 20px;
+}
+.main .studioscroll .inner .line 
+{
+    width: 100%;
+    height: 20px;
+    /* background: red; */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 758px){
+    .navbar .center 
+    {
+        display: none;
+    }
+}

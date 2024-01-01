@@ -9,61 +9,28 @@ import LoadingBar from "react-top-loading-bar";
 import Channel from "./Channel";
 import { NavLink } from "react-router-dom";
 
-function ChannelHome({ userInfo }){
+function ChannelHome({ userInfo, subdata }){
     const [videos, setVideos] = useState([]);
-    // const [featured, setFeatured] = useState([]);
+    const [requestuserinfo, setRequestUserInfo] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [delayedLoading, setDelayedLoading] = useState(false);
     
-    const { channelId } = useParams();
+    const { channelslug } = useParams();
+
+    const channelslu = channelslug.replace('@', '');
+
+
+    const onDataReceivedFromChild = (data) => {
+        setVideos(data.videos);
+        console.log(data);
+        setRequestUserInfo(data);
+        setIsLoading(false);
+        setTimeout(() => {
+            setDelayedLoading(true);
+        }, 1000);
+    }
 
     useEffect(() => {
-        
-        const videos_data = () => {
-            fetch('http://localhost:8000/api/user_videos', {
-                method: 'GET',
-                credentials: 'include',
-            })
-            .then(response => {
-                if(response.status === 200){
-                    return response.json();
-                } else {
-                    throw new Error('failed to fetch user videos..');
-                }
-            })
-            .then(data => {
-                setVideos(data.videos);
-                setIsLoading(false);
-                setTimeout(() => {
-                    setDelayedLoading(true);
-                }, 1000);
-            })
-            .catch(error => {
-                console.error('Error fetching user info:', error);
-            });
-        }
-        videos_data();
-
-
-
-        fetch('http://localhost:8000/api/featured_video', {
-                method: 'GET',
-                credentials: 'include',
-        })
-        .then(response => {
-            if(response.status === 200){
-                return response.json();
-            } else {
-                throw new Error('failed to fetch featured videos..');
-            }
-        })
-        .then(data => {
-            // setFeatured(data[0]);
-        })
-        .catch(error => {
-            console.error('Error fetching user info:', error);
-        });
-
 
     }, []);
 
@@ -71,7 +38,12 @@ function ChannelHome({ userInfo }){
     return (
         <>
             <Helmet>
-                <title>{`${userInfo.channeluser} - YouTube`}</title>
+                {requestuserinfo ? (
+                    <title>{`${requestuserinfo.name} - YouTube`}</title>
+                ):(
+                    <title>YouTube</title>
+                )}
+                
             </Helmet>
 
             <LoadingBar
@@ -83,12 +55,12 @@ function ChannelHome({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll">
                     <div className="channellayer">
-                        <Channel channelId={channelId} />
+                        <Channel channelslug={channelslu} onDataReceived={onDataReceivedFromChild} />
                         <div className="channelvideoscon">
-                            <h4>Videos ({userInfo.videoslength})</h4>
+                            <h4>Videos ({videos.length})</h4>
                             <div className="channelvideoscon-inner">
                                 {videos.length <= 4 ? (
                                     <>

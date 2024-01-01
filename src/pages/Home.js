@@ -9,8 +9,9 @@ import axios from 'axios';
 import Sidebar from "../components/Sidebar";
 import LoadingBar from 'react-top-loading-bar';
 import NoInternetPage from "./NoInternetPage";
+import LazyImage from "./LazyImage";
 
-function Home({ userInfo }){
+function Home({ userInfo, subdata }){
     const [videos, setVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(1);
@@ -24,7 +25,7 @@ function Home({ userInfo }){
     axios.defaults.xsrfCookieName = 'csrftoken'; 
     
     const fetchData = () => {
-        const apiurl = 'http://localhost:8000/api';
+        const apiurl = 'http://localhost:8000/api/videos';
 
         axios.get(apiurl)
         .then(response => {
@@ -133,7 +134,7 @@ function Home({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side userInfo={userInfo} />
-                <Sidebar userInfo={userInfo} />
+                <Sidebar userInfo={userInfo} subdata={subdata} />
                 <div className="main-scroll" ref={containerRef}>
                     <div className="inner">
                         { isOnline ? (
@@ -152,17 +153,12 @@ function Home({ userInfo }){
                                                 <div className="video" key={video.id}>
                                                     <div className="video-img">
                                                         <label>{video.duration}</label>
-                                                        
-                                                        <img alt="s" src={delayedLoading ? video.image : thumbnail} data-real-src={video.image} />
-                                                        
+                                                        <LazyImage src={thumbnail} data-real-src={video.image} alt={video.id} />                                                        
                                                     </div>
                                                     <div className="video-detail">
                                                         <div className="video-left">
                                                             <div className="video-author-img">
-                                                                
-                                                                
-                                                                    <img alt="s" src={delayedLoading ? video.channelimg : author} data-real-src={video.channelimg} />
-                                                                
+                                                                <LazyImage src={author} data-real-src={video.channelimg} alt={video.id} /> 
                                                             </div>
                                                         </div>
                                                         <div className="video-right">
@@ -199,16 +195,13 @@ function Home({ userInfo }){
                                                     <NavLink to={`/watch/${video.id}`} key={video.id}>
                                                         <div className="video-img">
                                                             <label>{video.duration}</label>
-                                                            <img alt="s" src={delayedLoading ? video.image : thumbnail} data-real-src={video.image} />
+                                                            <LazyImage src={thumbnail} data-real-src={video.image} alt={video.id} />
                                                         </div>
                                                     </NavLink>
                                                     <div className="video-detail">
                                                         <div className="video-left">
                                                             <div className="video-author-img">
-                                                                
-                                                                
-                                                                    <img alt="s" src={delayedLoading ? video.channelimg : author} data-real-src={video.channelimg} />
-                                                                
+                                                                <LazyImage src={author} data-real-src={video.channelimg} alt={video.id} />
                                                             </div>
                                                         </div>
                                                         <div className="video-right">

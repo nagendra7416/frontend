@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import thumbnail from '../assets/placeholder.jpg';
 import LoadingBar from "react-top-loading-bar";
+import LazyImage from "./LazyImage";
 
-function History({ userInfo }){
+function History({ userInfo, subdata }){
     const [historyvideos, setHistoryVideos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [delayedLoading, setDelayedLoading] = useState(false);
@@ -25,7 +26,6 @@ function History({ userInfo }){
             }
         })
         .then(data => {
-            console.log(data.history);
             setHistoryVideos(data.history);
             setIsLoading(false);
             setTimeout(() => {
@@ -49,7 +49,7 @@ function History({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll">
                     <div className="inners" style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <h2 style={{padding: '20px', maxWidth: '1284px', width: '95%'}}>History</h2>
@@ -59,7 +59,7 @@ function History({ userInfo }){
                                     <NavLink to={`/watch/${hvideo.id}`}>
                                         <div className="explore">
                                             <div className="leftimg">
-                                                <img alt="s" src={delayedLoading ? hvideo.image : thumbnail} data-real-src={hvideo.image} />
+                                                <LazyImage alt={hvideo.id} src={thumbnail} data-real-src={hvideo.image} />
                                                 <span>
                                                     <p>{hvideo.duration}</p>
                                                 </span>

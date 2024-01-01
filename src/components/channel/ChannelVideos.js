@@ -9,39 +9,28 @@ import Sidebar from "../Sidebar";
 import LoadingBar from "react-top-loading-bar";
 import Channel from "./Channel";
 
-function ChannelVideos({ userInfo }){
+function ChannelVideos({ userInfo, subdata }){
     const [videos, setVideos] = useState([]);
+    const [requestuserinfo, setRequestUserInfo] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [delayedLoading, setDelayedLoading] = useState(false);
     
-    const { channelId } = useParams();
+    const { channelslug } = useParams();
+
+    const channelslu = channelslug.replace('@', '');
+
+
+    const onDataReceivedFromChild = (data) => {
+        console.log(data);
+        setVideos(data.videos);
+        setRequestUserInfo(data);
+        setIsLoading(false);
+        setTimeout(() => {
+            setDelayedLoading(true);
+        }, 1000);
+    }
 
     useEffect(() => {
-        
-        const videos_data = () => {
-            fetch('http://localhost:8000/api/user_videos', {
-                method: 'GET',
-                credentials: 'include',
-            })
-            .then(response => {
-                if(response.status === 200){
-                    return response.json();
-                } else {
-                    throw new Error('failed to fetch user videos..');
-                }
-            })
-            .then(data => {
-                setVideos(data.videos);
-                setIsLoading(false);
-                setTimeout(() => {
-                    setDelayedLoading(true);
-                }, 100);
-            })
-            .catch(error => {
-                console.error('Error fetching user info:', error);
-            });
-        }
-        videos_data();
 
     }, []);
 
@@ -49,7 +38,12 @@ function ChannelVideos({ userInfo }){
     return (
         <>
             <Helmet>
-                <title>{`${userInfo.channeluser} - YouTube`}</title>
+                {requestuserinfo ? (
+                    <title>{`${requestuserinfo.name} - YouTube`}</title>
+                ):(
+                    <title>YouTube</title>
+                )}
+                
             </Helmet>
 
             <LoadingBar
@@ -58,15 +52,15 @@ function ChannelVideos({ userInfo }){
                 progress={isLoading ? 30 : 100} // Set progress based on loading state
             />
 
-<Navbar userInfo={userInfo} />
+            <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll">
                     <div className="channellayer">
-                        <Channel channelId={channelId} />
+                        <Channel channelslug={channelslu} onDataReceived={onDataReceivedFromChild} />
                         <div className="channelvideoscon">
-                            <h4>Videos ({userInfo.videoslength})</h4>
+                            <h4>Videos ({videos.length})</h4>
                             <div className="channelvideoscon-inner">
                                 {videos.length <= 4 ? (
                                     <>

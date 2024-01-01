@@ -3,14 +3,15 @@ import logo from '../../assets/author.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-export default function Channel({ channelId }){
+export default function Channel({ channelslug, onDataReceived }){
     const [userInfo, setUserInfo] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
 
-    const isHomePage = location.pathname === `/channel/${channelId}`;
-    const isVideoPage = location.pathname === `/channel/${channelId}/videos`;
-    const isAboutPage = location.pathname === `/channel/${channelId}/about`;
+    const isHomePage = location.pathname === `/c/@${channelslug}`;
+    const isVideoPage = location.pathname === `/c/@${channelslug}/videos`;
+    const isChannelPage = location.pathname === `/c/@${channelslug}/channels`;
+    const isAboutPage = location.pathname === `/c/@${channelslug}/about`;
 
     const mousewheel = () => {
         var container = document.querySelector('.sticky-buttons .links');
@@ -24,7 +25,7 @@ export default function Channel({ channelId }){
     mousewheel();
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/user_channel_json/${channelId}`, {
+        fetch(`http://localhost:8000/api/user_channel_json/${channelslug}`, {
             method: 'GET',
             credentials: 'include',
         })
@@ -38,11 +39,12 @@ export default function Channel({ channelId }){
         })
         .then(data => {
             setUserInfo(data);
+            onDataReceived(data);
         })
         .catch(error => {
             console.error('Error fetching user info:', error);
         });
-    }, [channelId, navigate])
+    }, [channelslug, navigate])
 
     return (
         <>
@@ -60,20 +62,20 @@ export default function Channel({ channelId }){
                                     <div className="meta">
                                         <div className="channel-name">
                                             <div className="channel-name-inner">
-                                                <h4>{userInfo.name}</h4>
+                                                <h4>{userInfo.name ? userInfo.name : 'Loading...'}</h4>
                                             </div>
                                         </div>
                                         <div className="channel-info">
-                                            <span>@{userInfo.slug}</span>
-                                            <span>{userInfo.subscribers} subscribers</span>
-                                            <span>{userInfo.videoslength} videos</span>
+                                            <span>@{userInfo.slug ? userInfo.slug : 'Loading...'}</span>
+                                            <span>{userInfo.subscribers ? userInfo.subscribers : "0"} subscribers</span>
+                                            <span>{userInfo.videoslength ? userInfo.videoslength : "0"} videos</span>
                                         </div>
                                         <div className="channel-tagline">
                                             <div className="channel-tagline-render">
-                                                <NavLink to='/'>
+                                                <NavLink to={`/c/@${channelslug}/about`}>
                                                     <div className="wrapper">
                                                         <div className="content">
-                                                            {userInfo.description}
+                                                            {userInfo.description ? userInfo.description : "Loading..."}
                                                         </div>
                                                         <div className="more-item">
                                                             <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="m9.4 18.4-.7-.7 5.6-5.6-5.7-5.7.7-.7 6.4 6.4-6.3 6.3z"></path></svg>
@@ -84,7 +86,7 @@ export default function Channel({ channelId }){
                                         </div>
                                         <div className="channel-header-links">
                                             <div className="channel-header-links-inner">
-                                                <NavLink to='/'>
+                                                <NavLink to={`/c/@${channelslug}/about`}>
                                                     youtube.com
                                                 </NavLink>
                                                 and more
@@ -114,7 +116,7 @@ export default function Channel({ channelId }){
                             <div className="links">
                                 <ul>
                                     <li>
-                                        <NavLink to={`/channel/${channelId}`}>
+                                        <NavLink to={`/c/@${channelslug}`}>
                                             {isHomePage ? (
                                                 <button className="home active">
                                                     Home
@@ -127,7 +129,7 @@ export default function Channel({ channelId }){
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to={`/channel/${channelId}/videos`}>
+                                        <NavLink to={`/c/@${channelslug}/videos`}>
                                             {isVideoPage ? (
                                                 <button className='active'>
                                                     Videos
@@ -148,21 +150,40 @@ export default function Channel({ channelId }){
                                         </NavLink>
                                     </li>
                                     <li>
+                                        <NavLink to={`/c/@${channelslug}/channels`}>
+                                            {isChannelPage ? (
+                                                <button className='active'>
+                                                    Channels
+                                                </button>
+                                            ):(
+                                                <button>
+                                                    Channels
+                                                </button>
+                                            )}
+                                            
+                                        </NavLink>
+                                    </li>
+                                    <li>
                                         <NavLink to='/'>
                                             <button>
                                                 Playlists
                                             </button>
                                         </NavLink>
                                     </li>
+                                    {userInfo.subscribers >= 1000 ? (
+                                        <li>
+                                            <NavLink to='/'>
+                                                <button>
+                                                    community
+                                                </button>
+                                            </NavLink>
+                                        </li>
+                                    ):(
+                                        <></>
+                                    )}
+                                    
                                     <li>
-                                        <NavLink to='/'>
-                                            <button>
-                                                community
-                                            </button>
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to={`/channel/${channelId}/about`}>
+                                        <NavLink to={`/c/@${channelslug}/about`}>
                                             {isAboutPage ? (
                                                 <button className="about active">
                                                     about

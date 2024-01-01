@@ -9,11 +9,19 @@ import Sidebar from "../Sidebar";
 import LoadingBar from "react-top-loading-bar";
 import Channel from "./Channel";
 
-function ChannelAbout({ userInfo }){
-    const [isLoading, setIsLoading] = useState(true);
-    // const [delayedLoading, setDelayedLoading] = useState(false);
-    
-    const { channelId } = useParams();
+function ChannelAbout({ userInfo, subdata }){
+    const [isLoading, setIsLoading] = useState(true);   
+    const [requestuserinfo, setRequestUserInfo] = useState([]);
+
+    const { channelslug } = useParams();
+
+    const channelslu = channelslug.replace('@', '');
+
+    const onDataReceivedFromChild = (data) => {
+        setRequestUserInfo(data);
+        setIsLoading(false);
+        console.log(data);
+    }
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/explore`)
@@ -27,7 +35,12 @@ function ChannelAbout({ userInfo }){
     return (
         <>
             <Helmet>
-                <title>{`${userInfo.channeluser} - YouTube`}</title>
+                {requestuserinfo ? (
+                    <title>{`${requestuserinfo.name} - YouTube`}</title>
+                ):(
+                    <title>YouTube</title>
+                )}
+                
             </Helmet>
 
             <LoadingBar
@@ -39,27 +52,26 @@ function ChannelAbout({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll">
                     <div className="channellayer">
-                        <Channel channelId={channelId} />
+                        <Channel channelslug={channelslu} onDataReceived={onDataReceivedFromChild} />
                         <div className="channelvideoscon">
-                            <h4>Videos</h4>
                             <div className="channelvideoscon-inner">
-                                <div class="description">
-                                    <div class="desc-left">
-                                        <div class="descript">
+                                <div className="description">
+                                    <div className="desc-left">
+                                        <div className="descript">
                                             <label>Description</label>
-                                            <p>{userInfo.description}</p>
+                                            <p>{requestuserinfo.description}</p>
                                         </div>
-                                        <div class="descdetails">
+                                        <div className="descdetails">
                                             <label>Details</label>
                                             <div>
                                                 <span>For business enquiries: <a href="#">hew@gmail.com</a></span>
                                                 <span>Location: <label>India</label></span>
                                             </div>
                                         </div>
-                                        <div class="descdetails">
+                                        <div className="descdetails">
                                             <label>Links</label>
                                             <div>
                                                 <span>Facebook: <label>hew@gmail.com</label></span>
@@ -67,15 +79,15 @@ function ChannelAbout({ userInfo }){
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="desc-right">
+                                    <div className="desc-right">
                                         <label>Stats</label>
-                                        <div class="line"></div>
-                                        <span>Joined {userInfo.joined}</span>
-                                        <div class="line"></div>
-                                        <span>{userInfo.total_views} views</span>
-                                        <div class="line"></div>
+                                        <div className="line"></div>
+                                        <span>Joined {requestuserinfo.joined}</span>
+                                        <div className="line"></div>
+                                        <span>{requestuserinfo.total_views} views</span>
+                                        <div className="line"></div>
                                         <button>
-                                            <svg enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="m13.18 4 .24 1.2.16.8H19v7h-5.18l-.24-1.2-.16-.8H6V4h7.18M14 3H5v18h1v-9h6.6l.4 2h7V5h-5.6L14 3z"></path></svg>
+                                            <svg height="24" viewBox="0 0 24 24" width="24" focusable="false"><path d="m13.18 4 .24 1.2.16.8H19v7h-5.18l-.24-1.2-.16-.8H6V4h7.18M14 3H5v18h1v-9h6.6l.4 2h7V5h-5.6L14 3z"></path></svg>
                                         </button>
                                     </div>
                                 </div>

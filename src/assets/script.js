@@ -75,6 +75,49 @@ allImages.forEach(function(img) {
 
 
 
+// var btn = document.querySelector('.navbar .inner .left .menu #menu');
+//     var studioside = document.querySelector('.main .studioside');
+//     var studioscroll = document.querySelector('.main .studioscroll');
+//     btn.addEventListener('click', function(){
+//         studioside.classList.toggle('active');
+//         studioscroll.classList.toggle('active');
+//     })
+
+
+//     function updateClass() {
+//         const windowWidth = window.innerWidth;
+
+
+//         if (windowWidth < 900) { // Replace '600' with your desired width'
+//             studioside.classList.add('active');
+//             studioscroll.classList.add('active');
+//         }
+//         if (windowWidth > 900) { // Replace '600' with your desired width
+//             studioside.classList.remove('active');
+//             studioscroll.classList.remove('active');
+//         }
+//     }
+
+//     // Initial call to set the class based on window width
+//     updateClass();
+
+//     // Add an event listener to update the class when the window is resized
+//     window.addEventListener('resize', updateClass);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import thumbnail from '../../assets/placeholder.jpg';
 import { Helmet } from "react-helmet";
 
-function AuthorChannelHome({ userInfo }){
+function AuthorChannelHome({ userInfo, subdata }){
     const [authorInfo, setAuthorInfo] = useState([]);
     const [videos, setVideos] = useState([]);
     const [delayedLoading, setDelayedLoading] = useState(false);
@@ -21,6 +21,7 @@ function AuthorChannelHome({ userInfo }){
     const onDataReceivedFromChild = (data) => {
         setAuthorInfo(data.author_data[0]);
         setVideos(data.videos_data);
+        console.log(data.videos_data);
         setTimeout(() => {
             setDelayedLoading(true);
         }, 1000);
@@ -28,30 +29,6 @@ function AuthorChannelHome({ userInfo }){
 
 
     useEffect(() => {
-        // const videos_data = () => {
-        //     fetch('http://localhost:8000/api/user_videos', {
-        //         method: 'GET',
-        //         credentials: 'include',
-        //     })
-        //     .then(response => {
-        //         if(response.status === 200){
-        //             return response.json();
-        //         } else {
-        //             throw new Error('failed to fetch user videos..');
-        //         }
-        //     })
-        //     .then(data => {
-        //         setVideos(data.videos);
-        //         setIsLoading(false);
-        //         setTimeout(() => {
-        //             setDelayedLoading(true);
-        //         }, 1000);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching user info:', error);
-        //     });
-        // }
-        // videos_data();
 
     }, [authorslu])
 
@@ -63,7 +40,7 @@ function AuthorChannelHome({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll">
                     <div className="channellayer">
                         <AuthorChannel userInfo={userInfo} authorslug={authorslu} onDataReceived={onDataReceivedFromChild} />

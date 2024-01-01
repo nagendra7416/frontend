@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import thumbnail from '../../assets/placeholder.jpg';
 import { Helmet } from "react-helmet";
 
-function AuthorChannelVideos({ userInfo }){
+function AuthorChannelVideos({ userInfo, subdata }){
     const [authorInfo, setAuthorInfo] = useState([]);
     const [videos, setVideos] = useState([]);
     const [delayedLoading, setDelayedLoading] = useState(false);
@@ -35,7 +35,7 @@ function AuthorChannelVideos({ userInfo }){
             <Navbar userInfo={userInfo} />
             <div className="main">
                 <Side />
-                <Sidebar />
+                <Sidebar subdata={subdata} />
                 <div className="main-scroll">
                     <div className="channellayer">
                         <AuthorChannel userInfo={userInfo} authorslug={authorslu} onDataReceived={onDataReceivedFromChild} />

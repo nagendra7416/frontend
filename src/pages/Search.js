@@ -23,7 +23,8 @@ function Search({ userInfo }){
             })
             .then((response) => response.json())
             .then((data) => {
-                setResults(data);
+                setResults(data.serialized_results);
+                console.log(data);
                 setIsLoading(false);
             })
             .catch((error) => console.error('Error searching:', error));
